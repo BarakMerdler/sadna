@@ -1,0 +1,4 @@
+Flask
+pyzbar
+passlib
+flask-debugtoolbar
