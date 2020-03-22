@@ -1,0 +1,17 @@
+{% extends "adminLayout.html" %} {% block title %} Register New Customer {%
+endblock %} {% block content %}
+
+<form action="" method="POST">
+  <label for="fname">Full name:</label><br />
+  <input type="text" id="fullName" name="fullName" value="Full Name" /><br />
+  <label for="lname">Email:</label><br />
+  <input type="email" id="email" name="email" value="email@Example.com" />
+  <br />
+  <label for="password">Password:</label><br />
+  <input type="password" id="password" name="password" value="password" />
+  <br /><br />
+  <input type="submit" />
+</form>
+<h1>{{error}}</h1>
+
+{% endblock %}

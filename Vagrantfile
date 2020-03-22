@@ -12,7 +12,6 @@ config.vm.define "ubuntu" do |ubuntu|
 end
 
 config.vm.define "stage" do |stage|
-  config.vm.network "forwarded_port", guest: 22, host: 5000
   stage.vagrant.plugins = "libxml2-dev"
   stage.vagrant.plugins = "vagrant-aws"
   stage.vm.box = "dummy"

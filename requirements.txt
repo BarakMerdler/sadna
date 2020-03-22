@@ -2,3 +2,5 @@ Flask
 pyzbar
 passlib
 flask-debugtoolbar
+mongoengine
+dnspython
