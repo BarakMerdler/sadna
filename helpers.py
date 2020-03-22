@@ -9,3 +9,4 @@ def decode(img):
     for obj in decodedObjects:
         return obj.data
     return None
+

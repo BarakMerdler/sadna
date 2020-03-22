@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='css/home.css') }}"
+    />
+    <title>PerCare - Signin</title>
+  </head>
+  <body>
+    <main>
+      <form action="" method="POST">
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" value="email@Example.com" />
+        <br />
+        <label for="password">Password:</label><br />
+        <input type="password" id="password" name="password" value="password" />
+        <br /><br />
+        <input type="submit" />
+        <h1>{{ error }}</h1>
+      </form>
+    </main>
+  </body>
+</html>
