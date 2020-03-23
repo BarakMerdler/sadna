@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='css/home.css') }}"
+    />
+    <title>PerCare - Signin</title>
+  </head>
+  <body>
+    <main>
+      <form action="" method="POST">
+        <label for="no_oper_room">מס' חדרי ניתוחים או טיפולים</label><br />
+        <input type="number" id="no_oper_room" name="no_oper_room" value={{
+        session.get("no_oper_room") }} /><br />
+        <label for="no_cage">מס' תאים קבועים במרפאה</label><br />
+        <input type="number" id="no_cage" name="no_cage" value={{
+        session.get("no_cage") }} />
+        <br /><br />
+        <input type="submit" />
+      </form>
+    </main>
+  </body>
+</html>

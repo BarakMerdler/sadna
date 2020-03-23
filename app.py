@@ -6,6 +6,8 @@ import os
 from passlib.hash import sha256_crypt
 from datetime import datetime
 from pymongo import MongoClient
+from bson import json_util, ObjectId, BSON
+import json
 
 app = Flask(__name__)
 
@@ -48,7 +50,10 @@ def index():
         if user and sha256_crypt.verify(userPass, user["password"]):
             session['name'] = user['name']
             session['admin'] = user['admin']
-            vet = findVet(user['veterinary_id'])
+            vetId = user['veterinary_id']
+            vet = findVet(vetId)
+            vetId_sanitized = json.loads(json_util.dumps(vetId))
+            session['vetId'] = vetId_sanitized
             session['vet_name'] = vet['name']
             session['no_oper_room'] = vet['no_oper_room']
             session['no_cage'] = vet['no_cage']
@@ -62,7 +67,23 @@ def index():
 
 @app.route('/vetAdmin', methods=['GET', 'POST'])
 def vetAdmin():
-    return 'success'
+    if request.method == 'POST':
+        vetsDetails = request.form
+        no_oper_room = int(vetsDetails['no_oper_room'])
+        vetsCage = int(vetsDetails['no_cage'])
+        vetId = int(session['vetId'])
+        try:
+            vet.update_one({"_id": vetId}, {
+                "$set": {
+                    "no_oper_room": no_oper_room,
+                    "no_cage": vetsCage
+                }})
+            session["no_oper_room"] = no_oper_room
+            session["no_cage"] = vetsCage
+            return render_template('/veterinary.html')
+        except Exception as e:
+            print(e)
+    return render_template('/vetAdmin.html')
 
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -79,7 +100,6 @@ def admin():
             "name": userName,
             "password": userPassword,
             "admin": True,
-            "super_admin": True,
             "date_created": datetime.utcnow()
         }
         try:
@@ -97,7 +117,9 @@ def vetInit():
         vetDetails = request.form
         vetName = vetDetails['name']
         vetAddress = vetDetails['address']
+        vetId = vet.count_documents({}) + 1
         newVet = {
+            "_id": vetId,
             "name": vetName,
             "address": vetAddress,
             "no_oper_room": 0,
