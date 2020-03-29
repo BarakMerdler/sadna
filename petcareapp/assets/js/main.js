@@ -160,3 +160,31 @@ function drop(ev) {
 
 
 
+function viewTreatment() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+
+function addDiagnosis() {
+  var x = document.getElementById("diagnosisText");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+
+
+
+function viewSearch(){
+  var x = document.getElementById("searchView");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
