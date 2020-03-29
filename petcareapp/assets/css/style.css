@@ -1362,6 +1362,16 @@ button {
   width: 50%;
 }
 
+.searchbutton {
+  background-color: gray;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+}
+
 button:hover {
   opacity: 0.8;
 }
@@ -1460,12 +1470,50 @@ span.psw {
   }
 }
 
+#myDIV{
+
+  display: none;
+
+}
+
+#diagnosisText{
+
+  display: none;
+
+}
+
+#searchView{
+
+  display: none;
+
+}
+
+#searchPet{
+
+  width:50%;
+
+}
 
 
 
+#spaceDiv{
 
+height: 100px;
 
+}
 
+.fonttitle{
+
+  font-size: 36px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  line-height: 1;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #1dc8cd;
+}
 
 
 
