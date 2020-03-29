@@ -22,18 +22,19 @@ content %}
     };
     xhr.send(formdata);
   }
+  +(
+    //Get the image from the canvas
+    function sendImagefromCanvas() {
+      //Make sure the canvas is set to the current video size
+      imageCanvas.width = v.videoWidth;
+      imageCanvas.height = v.videoHeight;
 
-  //Get the image from the canvas
-  function sendImagefromCanvas() {
-    //Make sure the canvas is set to the current video size
-    imageCanvas.width = v.videoWidth;
-    imageCanvas.height = v.videoHeight;
+      imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
 
-    imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
-
-    //Convert the canvas to blob and post the file
-    imageCanvas.toBlob(postFile, "image/jpeg");
-  }
+      //Convert the canvas to blob and post the file
+      imageCanvas.toBlob(postFile, "image/jpeg");
+    }
+  );
 
   //Take a picture on click
   v.onclick = function() {

@@ -25,6 +25,9 @@ db = client['petcare']
 #! Set the tables
 users = db['users']
 vet = db['veterinarys']
+customers = db['customers']
+activePet = db['activePet']
+pets = db['pets']
 
 #! DB functions get/set
 
@@ -63,6 +66,59 @@ def index():
             return render_template('/veterinary.html')
         return render_template('/home.html', error='Please check your email and password')
     return render_template('/home.html')
+
+
+@app.route('/addpet', methods=['GET', 'POST'])
+def addpet():
+    if request.method == 'POST':
+        userDetails = request.form
+        email = userDetails['email']
+        if (findUser(email)):
+            return 'found the user'
+        return redirect(url_for('addNewCustomer', email=email))
+    return render_template('/customers.html')
+
+
+@app.route('/addNewCustomer', methods=['GET', 'POST'])
+def addNewCustomer():
+    customerMail = request.args['email']
+    if request.method == 'POST':
+        print(request.form)
+        petsNames = request.form.getlist('name')
+        petsTypes = request.form.getlist('type')
+        userName = request.form['custNmae']
+        petsId = []
+        for i in range(len(petsNames)):
+            print("name {}: type {}".format(petsNames[i], petsTypes[i]))
+            petid = pets.count_documents({}) + 1
+            newPet = {
+                "_id": petid,
+                "name": petsNames[i],
+                "type": petsTypes[i],
+                "active": False,
+                "date_created": datetime.utcnow()
+            }
+            try:
+                pets.insert_one(newPet)
+            except Exception as e:
+                print(e)
+            try:
+                petsId.append(petid)
+            except Exception as e:
+                print(e)
+        newCust = {
+            "email": customerMail,
+            "name": userName,
+            "pet_id": petsId,
+            "date_created": datetime.utcnow()
+        }
+        try:
+            customers.insert_one(newCust)
+        except Exception as e:
+            print(e)
+
+        return 'POST'
+    return render_template('/setNewPet.html', customerMail=customerMail)
 
 
 @app.route('/vetAdmin', methods=['GET', 'POST'])
