@@ -6,6 +6,8 @@
       type="text/css"
       href="{{ url_for('static',filename='css/home.css') }}"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     {% block head %}
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
@@ -22,6 +24,9 @@
               <a href="{{ url_for('vetAdmin') }}">Update Facilty</a>
             </li>
             {%- endif %}
+            <li>
+              <a href="{{ url_for('addpet') }}">Add Animal</a>
+            </li>
           </ul>
         </nav>
       </div>
