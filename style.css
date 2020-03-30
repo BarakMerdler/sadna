@@ -602,10 +602,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 #features .box {
   margin-bottom: 15px;
   text-align: center;
+  
 }
 
 #features .icon {
   margin-bottom: 10px;
+  
 }
 
 #features .icon i {
@@ -1353,13 +1355,15 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
-  background-color: gray;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
+  background: linear-gradient(45deg, #1de099, #1dc8cd);
+  border: 0;
+  border-radius: 20px;
+  padding: 8px 30px;
+  color: #fff;
   width: 50%;
+
+  margin: 35px;
+
 }
 
 .searchbutton {
@@ -1515,6 +1519,13 @@ height: 100px;
   color: #1dc8cd;
 }
 
+.iconH{
+
+height: 50px;
+
+width: 50%;
+
+}
 
 
 
