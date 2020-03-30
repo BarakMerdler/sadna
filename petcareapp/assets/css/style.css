@@ -602,10 +602,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 #features .box {
   margin-bottom: 15px;
   text-align: center;
+  
 }
 
 #features .icon {
   margin-bottom: 10px;
+  
 }
 
 #features .icon i {
@@ -1353,13 +1355,25 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
+  background: linear-gradient(45deg, #1de099, #1dc8cd);
+  border: 0;
+  border-radius: 20px;
+  padding: 8px 30px;
+  color: #fff;
+  width: 50%;
+
+  margin: 35px;
+
+}
+
+.searchbutton {
   background-color: gray;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 50%;
+  width: 20%;
 }
 
 button:hover {
@@ -1460,13 +1474,58 @@ span.psw {
   }
 }
 
+#myDIV{
+
+  display: none;
+
+}
+
+#diagnosisText{
+
+  display: none;
+
+}
+
+#searchView{
+
+  display: none;
+
+}
+
+#searchPet{
+
+  width:50%;
+
+}
 
 
 
+#spaceDiv{
 
+height: 100px;
 
+}
 
+.fonttitle{
 
+  font-size: 36px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  line-height: 1;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #1dc8cd;
+}
+
+.iconH{
+
+height: 50px;
+
+width: 50%;
+
+}
 
 
 
