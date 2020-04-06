@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block title %} homePage {% endblock %} {% block
+content %}
+
+<h1>Set New Pet Treatment</h1>
+<form action="" method="POST">
+  <select name="petsId" id="petsId">
+    {% for pet in cusromerPets %}
+    <option value="{{ pet._id }}">{{ pet._type }} - {{ pet._name }}</option>
+    {% endfor %}
+  </select>
+  <br />
+  <button type="submit">Send</button>
+</form>
+
+{% endblock %}

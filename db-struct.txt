@@ -1,0 +1,63 @@
+#from mongoengine import *
+
+connect(host='mongodb+srv://sadna:sadna1234@cluster0-duigw.mongodb.net/test?retryWrites=true&w=majority')
+
+class Veterinary(Document):
+    name = StringField(required=True)
+    address = StringField()
+    no_oper_room = IntField(default=0)
+    no_cage = IntField(default=0)
+    date_created = DateTimeField(default=datetime.utcnow())
+    meta = {
+        'ordering': ['-date_created']
+    }
+
+
+class Users(Document):
+    email = EmailField(required=True, unique=True)
+    name = StringField(required=True)
+    password = StringField()
+    admin = BooleanField()
+    veterinary_id = ReferenceField(Veterinary)
+    date_created = DateTimeField(default=datetime.utcnow())
+    meta = {
+        'indexes': ['email'],
+        'ordering': ['-date_created']
+    }
+
+class activePet:
+    pet_id: int
+    vet_id:int
+    startDate: Date
+    treatments: [{drug:string, descriptiom: string}]
+    nextStep: {when: Date, what:string}
+
+
+
+class medicalHistory
+    _id: int
+    pet_id: int
+    vet_id: int
+    startDate: Date
+    endDate: Date
+    drugs: [string]
+    treatments: [string]
+    discharge_note: string
+
+class customers:
+    email: string
+    pet_id: [int]
+    name: string
+
+class pets:
+    _id: int
+    name: string
+    type: string
+    rfid: int
+    active: bool
+
+
+
+    
+
+    
