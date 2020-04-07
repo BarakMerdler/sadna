@@ -1,0 +1,13 @@
+{% extends "adminLayout.html" %} {% block title %} Register New Veterinary {%
+endblock %} {% block content %}
+
+<form action="" method="POST">
+  <label for="fname">Veterinary name:</label><br />
+  <input type="text" id="name" name="name" value="Veterinary Name" /><br />
+  <label for="lname">Address:</label><br />
+  <input type="text" id="address" name="address" value="Veterinary address" />
+  <br /><br />
+  <input type="submit" />
+</form>
+
+{% endblock %}

@@ -2,3 +2,5 @@
 /.vscode
 /__pycache__
 /.vagrant
+ubuntu-bionic-18.04-cloudimg-console.log
+.env

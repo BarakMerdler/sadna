@@ -1,0 +1,28 @@
+{% extends "layout.html" %} {% block title %} homePage {% endblock %} {% block
+content %}
+
+<div class="wellcome">
+  <h2>Wellcome Back {{ session.get("name") }}</h2>
+  <h3>From {{ session.get("vet_name") }}</h3>
+</div>
+<div class="hospital-continer">
+  <div class="oper-room">
+    <h2>oper room</h2>
+    {% for i in range(session.get("no_oper_room")) %}
+    <p>{{ i }}</p>
+    <br />
+    {% endfor %}
+  </div>
+  <div class="care-room">
+    <h2>care room</h2>
+    {% for i in range(session.get("no_cage")) %}
+    <p>{{ i }}</p>
+    <br />
+    {% endfor %}
+  </div>
+  <div class="temp-room">
+    <h2>temp room</h2>
+  </div>
+</div>
+
+{% endblock %}

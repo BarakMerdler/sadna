@@ -13,9 +13,18 @@
 
   <body>
     <header>
-      <nav>
-        <h1>Nav Bar</h1>
-      </nav>
+      <div class="logo"><h1>Logo</h1></div>
+      <div class="navigation-main">
+        <nav>
+          <ul>
+            {%- if session.get("admin") -%}
+            <li>
+              <a href="{{ url_for('vetAdmin') }}">Update Facilty</a>
+            </li>
+            {%- endif %}
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <main>

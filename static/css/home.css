@@ -3,8 +3,10 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 video,
 canvas {
   transform: scale(-1, 1); /*For Firefox (& IE) */
   -webkit-transform: scale(-1, 1); /*for Chrome & Opera (& Safari) */
 }
+
