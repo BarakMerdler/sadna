@@ -1,0 +1,63 @@
+{% extends "layout.html" %} {% block title %} homePage {% endblock %} {% block
+content %}
+
+<div class="search-customers">
+  <form action="" method="POST" id="myForm">
+    <label for="custNmae">Customer Name:</label>
+    <input type="text" name="custNmae" value="Name" />
+    <br />
+    <div id="petInputDiv">
+      <label for="name">Pet Name:</label>
+      <input type="text" name="name" value="Pet Name" />
+      <br />
+      <label for="type">Pet Type:</label>
+      <input type="text" name="type" value="Pet Type" />
+      <br />
+    </div>
+    <button id="createFieldBtn">
+      Add another Pet
+    </button>
+    <br />
+    <input type="submit" value="submit" id="mySubmmit" />
+  </form>
+</div>
+<script>
+  let i = 1;
+  document.getElementById("mySubmmit").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    console.log($("#myForm").serialize());
+    $("#myForm").submit();
+  });
+  document
+    .getElementById("createFieldBtn")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      const myDiv = document.getElementById("petInputDiv");
+      // Create new input field
+      var newInput = document.createElement("INPUT");
+      newInput.name = "name";
+      newInput.type = "text";
+      newInput.value = "Pet Name";
+      var newInputType = document.createElement("INPUT");
+      newInputType.name = "type";
+      newInputType.type = "text";
+      newInputType.value = "Pet Type";
+
+      var newlabel = document.createElement("Label");
+      var newlabelType = document.createElement("Label");
+      newlabel.setAttribute("for", "name");
+      newlabel.innerHTML = "Pet Name:";
+      newlabelType.setAttribute("for", "type");
+      newlabelType.innerHTML = "Pet Type:";
+      myDiv.appendChild(document.createElement("hr"));
+      myDiv.appendChild(newlabel);
+      myDiv.appendChild(newInput);
+      myDiv.appendChild(document.createElement("br"));
+      myDiv.appendChild(newlabelType);
+      myDiv.appendChild(newInputType);
+      myDiv.appendChild(document.createElement("br"));
+      i++;
+    });
+</script>
+{% endblock %}
