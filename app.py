@@ -81,8 +81,14 @@ def index():
             #!------------------------------!
             # TODO get the active care animals
             #!------------------------------!
-            return redirect(url_for('home'))
+            return render_template('/home.html')
+#!---------------------!
+# TODO  לשים את הדף של עמנואל כאן
+# !--------------------!
         return render_template('/home.html', error='Please check your email and password')
+#!---------------------!
+# TODO  לשים את הדף של עמנואל כאן
+# !--------------------!
     return render_template('/home.html')
 
 # Route of the main app
@@ -183,10 +189,10 @@ def vetAdmin():
                 }})
             session["no_oper_room"] = no_oper_room
             session["no_cage"] = vetsCage
-            return redirect(url_for('home'))
+            return render_template('/home.html')
         except Exception as e:
             print(e)
-    return render_template('/vetAdmin.html')
+    return render_template('/editingRooms.html')
 
 # Route to set new user in a new vent
 @app.route('/admin', methods=['GET', 'POST'])

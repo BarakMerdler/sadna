@@ -1,27 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static',filename='css/home.css') }}"
-    />
-    <title>PerCare - Signin</title>
-  </head>
-  <body>
-    <main>
-      <form action="" method="POST">
-        <label for="email">Email:</label><br />
-        <input type="email" id="email" name="email" value="email@Example.com" />
-        <br />
-        <label for="password">Password:</label><br />
-        <input type="password" id="password" name="password" value="password" />
-        <br /><br />
-        <input type="submit" />
-        <h1>{{ error }}</h1>
-      </form>
-    </main>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block head %} {% endblock %}
+
+
+
+
+  {% block content %} 
+  <section id="team">
+
+    <h2>Drag and Drop</h2>
+
+      <p>Drag the image back and forth between the columns</p>
+
+        <div id="div4"  >
+
+
+
+             <!-- תמונות גינריות של חיות שצריכות לקבל id  -->
+
+            <img src="assets/img/animals/cow.png" draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="50">
+            <img src="assets/img/animals/tiger.png" draggable="true" ondragstart="drag(event)" id="drag2" width="88" height="50">
+            <img src="assets/img/animals/giraffe.png" draggable="true" ondragstart="drag(event)" id="drag3" width="88" height="50">
+            <img src="assets/img/animals/lion.jpg" draggable="true" ondragstart="drag(event)" id="drag4" width="88" height="50">
+            <img src="assets/img/animals/pinguin.jpg" draggable="true" ondragstart="drag(event)" id="drag5" width="88" height="50">
+
+         </div>
+
+        <!-- התאים של החיות שמקבלים את התמונות -->
+
+     <div id="div2" >
+
+       <div><h7>Available Cabins</h7></div>
+
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">1</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">2</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">3</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">4</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">5</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">6</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">7</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">8</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">9</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">10</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">11</div>
+
+     </div>
+
+     <div id="div2" >
+
+       <div><h7>Available treatment's rooms</h7></div>
+
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">1</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">2</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">3</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">4</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">5</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">6</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">7</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">8</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">9</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">10</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">11</div>
+
+     </div>
+
+     <div id="div2" >
+
+       <div><h7>Completion</h7></div>
+
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">1</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">2</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">3</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">4</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">5</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">6</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">7</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">8</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">9</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">10</div>
+       <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">11</div>
+
+     </div>
+
+  </section>
+
+  
+  {%endblock%}

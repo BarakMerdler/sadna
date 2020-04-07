@@ -5,9 +5,18 @@
 * License: https://bootstrapmade.com/license/
 */
 
+video,
+canvas {
+  transform: scale(-1, 1); /*For Firefox (& IE) */
+  -webkit-transform: scale(-1, 1); /*for Chrome & Opera (& Safari) */
+}
+
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+
 body {
   background: #fff;
   color: #666666;
@@ -1526,6 +1535,7 @@ height: 50px;
 width: 50%;
 
 }
+
 
 
 
