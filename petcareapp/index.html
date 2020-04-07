@@ -79,44 +79,131 @@
       <div class="container">
         <div class="row wow fadeInUp">
 
-          <div class="col-lg-4 col-md-4">
+          <div class="col-lg-6 col-md-4">
             <div class="contact-about">
               <h3>Search a pet</h3>
-              <p>###Search bar###.</p>
+
+              <div class="search-container">
+                <form action="">
+                  <input type="text" placeholder="Search..." name="search" id="searchPet">
+                  <button class="searchbutton"  onclick="viewSearch()" type="submit"><i  class="fa fa-search" ></i></button>
+                </form>
+              </div>
+
+                <!--נפתח כאשר לוחצים על כפתור החיפוש-->
+
+              <div id="searchView">
+
+                <table class="table table-hover table-dark">
+
+                  <tbody>
+                    <tr>
+                      <th scope="row">Pet id</th>
+                      <td>12345</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Last treatment</th>
+                      <td>12:00 , 24/09/2019</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Drugs</th>
+                      <td>Acamol</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+              </div>
+              
+
+            <div id="spaceDiv"></div>
 
             </div>
-              <div class="text-center"><button type="button" >Add a diagnosis</button></div>
-              <div class="text-center"><button type="button" >View Treatment log</button></div>
+
+              <a href="#myDIV">
+
+              <!--הופך את הטבלת טיפולים לנראית-->
+
+                <div ><button type="button"  onclick="viewTreatment()">View Treatment log</button></div>
+                
+              </a>
+
+              <!--הופך את חלון הטקסט לנראה-->
+
+              <div ><button type="button" onclick="addDiagnosis()">Add a diagnosis</button>
+              
+                <div id="diagnosisText">
+
+                  <form action="" method="post" role="form" class="php-email-form">
+
+                    <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" ></textarea>
+
+                      <div class="validate"></div>
+
+                       <div class="mb-3">
+                         <div class="loading">Loading</div>
+                          <div class="error-message"></div>
+                         <div class="sent-message">Your message has been sent. Thank you!</div>
+                       </div>
+
+                  <div class="text-center"><button type="submit" title="Send Message">Add to treatment log</button></div>
+
+                </form>
+
+
+
+                  </form>
+                  
+                </div>
+              
+              </div>
+            
           </div>
+        
 
-          <div class="col-lg-3 col-md-4">
-            <div class="info">
-             <h3 >Register a pet</h3>
-
-            </div>
-          </div>
-
-          <div class="col-lg-5 col-md-8">
+          <div class="col-lg-6 col-md-8">
+            <h3  class="fonttitle"> Register a pet </h3>  
             <div class="form">
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                <div class="form-row">
-                  <div class="form-group col-lg-6">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Pet's Owner Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <form action="" method="post" role="form" class="php-email-form">
+
+               
+                  <div class="form-group">
+                    <label for="Oname">Pet's Owner Name:</label>
+                    <input type="text" name="name" class="form-control" id="Oname"  data-rule="required" data-msg="Please enter a name">
                     <div class="validate"></div>
                   </div>
-                  <div class="form-group col-lg-6">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Pet's Owner Email" data-rule="email" data-msg="Please enter a valid email">
+
+                  <div class="form-group" >
+                    <label for="Oemail">Pet's Owner Email:</label>
+                    <input type="email" class="form-control" name="email" id="Oemail"  data-rule="email" data-msg="Please enter a valid email">
                     <div class="validate"></div>
                   </div>
-                </div>
+
+                  <div class="form-group" >
+                    <label for="Ophone">Pet's Owner phone:</label>
+                    <input type="phone" class="form-control input-phone" name="phone" id="Ophone"  data-rule="phone" data-msg="Please enter a valid number">
+                    <div class="validate"></div>
+                  </div>
+                
+
                 <div class="form-group">
-                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Pet Name" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject">
+                  <label for="Pname">Pet Name:</label>
+                  <input type="text" class="form-control" name="subject" id="Pname"  data-rule="required" data-msg="Please enter a name">
                   <div class="validate"></div>
                 </div>
+
                 <div class="form-group">
-                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Pet Diagnosis"></textarea>
+                  <label for="Pname">Pet Type:</label>
+                  <input type="text" class="form-control" name="subject" id="Ptype"  data-rule="required" data-msg="Please enter a type">
                   <div class="validate"></div>
                 </div>
+
+                <div class="form-group">
+                  <label for="Pname">Pet diagnosis:</label>
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" ></textarea>
+                  <div class="validate"></div>
+                </div>
+
                 <div class="mb-3">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
@@ -134,9 +221,11 @@
 
       <!-- TREATMENT LOG -->
 
-    <div class="row">
+      <!--נפתח רק כאשר לוחצים על הכפתור שלו-->
 
-       <div class="col-lg-12 content wow fadeInRight">
+    <div class="row" id="myDIV">
+
+       <div class="col-lg-10 content wow fadeInRight">
 
             <p> <h3> Treatment Log</h3></p>
 
@@ -144,9 +233,11 @@
                         <thead>
                           <tr>
                             <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Pet ID</th>
+                            <th scope="col">Vet ID</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">End date</th>
+                            <th scope="col">Diagnosis</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -155,49 +246,58 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
                           </tr>
                           <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
                           </tr>
                           <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
                           </tr>
                           <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
                           </tr>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                          </tr>
+                         
                         </tbody>
                 </table>
        </div>
@@ -213,7 +313,7 @@
 
         <p>Drag the image back and forth between the columns</p>
 
-          <div id="div4"  ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div id="div4"  >
 
 
 
@@ -229,7 +329,7 @@
 
           <!-- התאים של החיות שמקבלים את התמונות -->
 
-       <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+       <div id="div2" >
 
          <div><h7>Available Cabins</h7></div>
 
@@ -247,7 +347,7 @@
 
        </div>
 
-       <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+       <div id="div2" >
 
          <div><h7>Available treatment's rooms</h7></div>
 
@@ -265,7 +365,7 @@
 
        </div>
 
-       <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+       <div id="div2" >
 
          <div><h7>Completion</h7></div>
 
@@ -316,7 +416,7 @@
               <div class="col-lg-6 col-md-6 box wow fadeInRight">
                 <h4 class="title">Add a cabin</h4>
 
-                  <button type="button" class="icon"><i class="ion-ios-plus-outline"></i></button>
+                  <button type="button" class="iconH" ><i class="ion-ios-plus-outline"></i></button>
 
                 <p class="description"></p>
               </div>
@@ -324,7 +424,7 @@
               <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.1s">
                 <h4 class="title">Delete a cabin</h4>
 
-                  <button type="button" class="icon"><i class="ion-ios-minus-outline"></i></button>
+                  <button type="button" class="iconH"><i class="ion-ios-minus-outline"></i></button>
 
                 <p class="description"></p>
               </div>
@@ -332,7 +432,7 @@
               <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.2s">
                 <h4 class="title">Add a Treatment room</h4>
 
-                 <button type="button" class="icon"><i class="ion-ios-plus-outline"></i></button>
+                 <button type="button" class="iconH"><i class="ion-ios-plus-outline"></i></button>
 
                 <p class="description"></p>
               </div>
@@ -340,7 +440,7 @@
               <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.3s">
                 <h4 class="title">Delete a Treatment room</h4>
 
-                 <button type="button" class="icon"><i class="ion-ios-minus-outline"></i></button>
+                 <button type="button" class="iconH"><i class="ion-ios-minus-outline"></i></button>
 
                 <p class="description"> </p>
               </div>

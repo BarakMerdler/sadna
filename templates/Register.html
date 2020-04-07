@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{%block head%} {%endblock%}
+
+
+
+
+  {%block body%} 
+  <div class="col-lg-6 col-md-8">
+    <h3  class="fonttitle"> Register a pet </h3>  
+    <div class="form">
+      <form action="" method="post" role="form" class="php-email-form">
+
+       
+          <div class="form-group">
+            <label for="Oname">Pet's Owner Name:</label>
+            <input type="text" name="name" class="form-control" id="Oname"  data-rule="required" data-msg="Please enter a name">
+            <div class="validate"></div>
+          </div>
+
+          <div class="form-group" >
+            <label for="Oemail">Pet's Owner Email:</label>
+            <input type="email" class="form-control" name="email" id="Oemail"  data-rule="email" data-msg="Please enter a valid email">
+            <div class="validate"></div>
+          </div>
+
+          <div class="form-group" >
+            <label for="Ophone">Pet's Owner phone:</label>
+            <input type="phone" class="form-control input-phone" name="phone" id="Ophone"  data-rule="phone" data-msg="Please enter a valid number">
+            <div class="validate"></div>
+          </div>
+        
+
+        <div class="form-group">
+          <label for="Pname">Pet Name:</label>
+          <input type="text" class="form-control" name="subject" id="Pname"  data-rule="required" data-msg="Please enter a name">
+          <div class="validate"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="Pname">Pet Type:</label>
+          <input type="text" class="form-control" name="subject" id="Ptype"  data-rule="required" data-msg="Please enter a type">
+          <div class="validate"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="Pname">Pet diagnosis:</label>
+          <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" ></textarea>
+          <div class="validate"></div>
+        </div>
+
+        <div class="mb-3">
+          <div class="loading">Loading</div>
+          <div class="error-message"></div>
+          <div class="sent-message">Your message has been sent. Thank you!</div>
+        </div>
+        <div class="text-center"><button type="submit" title="Send Message">Submit</button></div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+</div>
+</section>
+
+
+  {%endblock%}
