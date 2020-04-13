@@ -81,22 +81,16 @@ def index():
             #!------------------------------!
             # TODO get the active care animals
             #!------------------------------!
-            return render_template('/home.html')
-#!---------------------!
-# TODO  לשים את הדף של עמנואל כאן
-# !--------------------!
-        return render_template('/home.html', error='Please check your email and password')
-#!---------------------!
-# TODO  לשים את הדף של עמנואל כאן
-# !--------------------!
-    return render_template('/home.html')
+            return redirect(url_for('home'))
+        return render_template('/landingPage.html', error='Please check your email and password')
+    return render_template('/landingPage.html')
 
 # Route of the main app
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         return 'POST at HOME'
-    return render_template('/veterinary.html')
+    return render_template('/home.html')
 
 # Route to add pet (new or no)
 @app.route('/addpet', methods=['GET', 'POST'])
