@@ -157,6 +157,16 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
+
+#intro .intro-text .error-message{
+  color: rgb(172, 12, 12);
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+
+}
+
+
 #intro h2 {
   margin: 30px 0 10px 0;
   padding: 0 15px;
@@ -1173,6 +1183,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding: 15px;
   font-weight: 600;
 }
+
+#
 
 #contact .php-email-form .sent-message {
   display: none;

@@ -66,7 +66,9 @@
       <h2>Welcome to Pet Care</h2>
       <p>Veterinary management solutions</p>
       <a href="#contact" class="btn-get-started scrollto">Log in</a>
-
+      <div class="error-message">
+        {{error}}
+    </div>
       <!-- <a href="#about" class="btn-get-started scrollto">Sign up </a>!-->
 
 
@@ -102,12 +104,12 @@
         <div class="row wow fadeInUp">
 
           <div class="col-lg-4 col-md-4">
-
+            
 
           </div>
 
 
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <form  method="post" role="form" class="php-email-form">
                 <div class="form-row">
                   <div class="form-group col-lg-12">
                     <input type="email" class="form-control" name="email" id="email" placeholder="email" data-rule="email" data-msg="Please enter a valid email">
@@ -125,10 +127,7 @@
 
                 <div class="mb-3">
                   <div class="loading">Loading</div>
-                  <div class="error-message">
-                      {{error}}
-                  </div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  
                 </div>
 
                 <div class="text-center"><button type="submit" >Submit</button></div>
@@ -248,6 +247,10 @@
 
   <!-- Template Main JS File -->
   <script src="static/js/main.js"></script>
+
+
+
+
 
 </body>
 
