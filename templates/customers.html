@@ -1,13 +1,11 @@
-{% extends "layout.html" %} {% block title %} homePage {% endblock %} {% block
-content %}
-
-<div class="search-customers">
+{% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
+<section id= "team">
   <form action="" method="POST">
     <label for="email">Email:</label>
     <input type="email" name="email" value="customers@mail.com" />
     <br /><br />
     <input type="submit" value="submit" />
   </form>
-</div>
+</section>
 
 {% endblock %}
