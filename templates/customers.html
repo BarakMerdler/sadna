@@ -1,11 +1,19 @@
-{% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
-<section id= "team">
-  <form action="" method="POST">
-    <label for="email">Email:</label>
-    <input type="email" name="email" value="customers@mail.com" />
-    <br /><br />
-    <input type="submit" value="submit" />
+{% extends 'base.html' %} {% block head %} {% endblock %} 
+
+{% block content %}
+
+  <form action="" method="POST" class="col-lg-8 col-md-4">
+    <div class="form-row">
+      <div class="form-group col-lg-6">
+        <input type="email" class="form-control" name="email" id="email" placeholder="email" data-rule="email" data-msg="Please enter a valid email">
+        <div class="validate"></div>
+        
+    </div>
+    <div class="text-center col-lg-6"><button type="submit" >Submit</button>
   </form>
-</section>
+  
+   
+
+  </div>
 
 {% endblock %}

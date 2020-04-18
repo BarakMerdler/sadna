@@ -47,7 +47,7 @@
         <ul class="nav-menu">
           <li class="menu-active"><a href="#intro">Home</a></li>
           <li><a href="#about">Main Table</a></li>
-          <li><a href="{{ url_for('addpet') }}">Pet</a></li>
+          <li><a href="{{ url_for('addpet') }}">Add Pet</a></li>
           <li><a href="#pricing">Rooms editing</a></li>
           <li><a href="#team">Team</a></li>
 
@@ -60,9 +60,28 @@
 
   <main id="main">
 
-    {% block content %} {% endblock %}
+    
 
+    <section id="contact" class="section-bg">
+      <div class="container-fluid">
+        <div class="section-header">
+          <h3 class="section-title"></h3>
+          <span class="section-divider"></span>
+          <p class="section-description">Enter  email to search</p>
+        </div>
+        <div class="row wow fadeInUp">
 
+  
+
+          {% block content %}
+          
+        {% endblock %}
+              
+
+        </div>
+      </div>
+
+    </section><!-- End log in Section -->
   </main>
 
   <!-- ======= Footer ======= -->
