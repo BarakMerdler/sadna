@@ -78,9 +78,6 @@ def index():
             session['vet_name'] = vet['name']
             session['no_oper_room'] = vet['no_oper_room']
             session['no_cage'] = vet['no_cage']
-            #!------------------------------!
-            # TODO get the active care animals
-            #!------------------------------!
             return redirect(url_for('home'))
         return render_template('/landingPage.html',error='Please check your email and/or password')
     return render_template('/landingPage.html')
@@ -88,6 +85,9 @@ def index():
 # Route of the main app
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+        #!------------------------------!
+        # TODO get the active care animals
+        #!------------------------------!
     if request.method == 'POST':
         return 'POST at HOME'
     return render_template('/home.html')
