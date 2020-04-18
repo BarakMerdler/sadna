@@ -9,13 +9,13 @@
       $('#header').addClass('header-fixed');
     } else {
       $('.back-to-top').fadeOut('slow');
-      $('#header').removeClass('header-fixed');
+     // $('#header').removeClass('header-fixed');
     }
   });
 
   if ($(this).scrollTop() > 100) {
-    $('.back-to-top').fadeIn('slow');
-    $('#header').addClass('header-fixed');
+    //$('.back-to-top').fadeIn('slow');
+    //$('#header').addClass('header-fixed');
   }
 
   $('.back-to-top').click(function() {

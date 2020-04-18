@@ -99,7 +99,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
   letter-spacing: 3px;
-  text-transform: uppercase;
 }
 
 #header #logo h1 a, #header #logo h1 a:hover {
@@ -157,6 +156,16 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   flex-direction: column;
 }
+
+
+#intro .intro-text .error-message{
+  color: rgb(172, 12, 12);
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+
+}
+
 
 #intro h2 {
   margin: 30px 0 10px 0;
@@ -1175,6 +1184,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-weight: 600;
 }
 
+
+
 #contact .php-email-form .sent-message {
   display: none;
   color: #fff;
@@ -1253,6 +1264,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding: 30px 0;
   color: #333;
   font-size: 14px;
+  
 }
 
 #footer .credits {
@@ -1371,9 +1383,12 @@ button {
   color: #fff;
   width: 50%;
 
-  margin: 35px;
+  margin: 0px;
 
 }
+
+
+
 
 .searchbutton {
   background-color: gray;

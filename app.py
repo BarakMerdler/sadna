@@ -82,7 +82,7 @@ def index():
             # TODO get the active care animals
             #!------------------------------!
             return redirect(url_for('home'))
-        return render_template('/landingPage.html', error='Please check your email and password')
+        return render_template('/landingPage.html',error='Please check your email and/or password')
     return render_template('/landingPage.html')
 
 # Route of the main app
