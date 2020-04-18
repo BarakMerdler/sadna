@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
+<<<<<<< HEAD
+{% extends 'base.html' %} {% block head %} {% endblock %}
+
+ {% block content %}
 <section id="team">
   <h2>Drag and Drop</h2>
 
@@ -63,7 +66,9 @@
     {% endfor %}
   </div>
 
-  <!-- התאים של החיות שמקבלים את התמונות -->
+
+
+
 
   <div id="div2">
     <div><h7>Available Cabins</h7></div>
@@ -82,9 +87,6 @@
     for index in range(session.get("no_cage")) %}
     <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
       Empty
-    </div>
-    {% endfor %}
-  </div>
 
   <div id="div2">
     <div><h7>Available treatment's rooms</h7></div>
@@ -103,9 +105,12 @@
     {% for index in range(session.get("no_oper_room")) %}
     <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
       Empty
+
+
     </div>
-    {% endfor %}
+    
   </div>
+
   <div><h7>Temp Cages</h7></div>
   <div id="div2" style="display: flex; flex-direction: column; margin: auto;">
     {% for pet in petTemp %}
@@ -120,7 +125,25 @@
       <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
     </div>
     {% endfor %}
-  </div>
-</section>
 
-{%endblock%}
+
+
+
+    <div id="div2">
+      <div><h7>Completion</h7></div>
+
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">1</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">2</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">3</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">4</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">5</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">6</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">7</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">8</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">9</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">10</div>
+      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">11</div>
+    </div>
+  </section>
+
+  {% endblock %}
