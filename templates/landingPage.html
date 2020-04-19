@@ -1,79 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PerCare-Login</title>
+    <meta content="" name="descriptison" />
+    <meta content="" name="keywords" />
 
-  <title>PerCare-Login</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+    <!-- Favicons -->
+    <!-- <link href="assets/img/favicon.png" rel="icon"> !-->
 
-  <!-- Favicons -->
- <!-- <link href="assets/img/favicon.png" rel="icon"> !-->
+    <!--<link href="static/img/apple-touch-icon.png" > !-->
+    <!-- <link  href="{{url_for('static', filename='img/apple-touch-icon.png')}}"> !-->
 
-  <!--<link href="static/img/apple-touch-icon.png" > !-->
-   <!-- <link  href="{{url_for('static', filename='img/apple-touch-icon.png')}}"> !-->
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
+    />
 
+    <!-- Vendor CSS Files -->
+    <!--  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">!-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}"
+    />
+    <!-- <link href="assets/vendor/ionicons/css/ionicons.min.css" rel="stylesheet">!-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='vendor/ionicons/css/ionicons.min.css')}}"
+    />
+    <!--<link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">!-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='vendor/animate.css/animate.min.css')}}"
+    />
+    <!--<link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">!-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css')}}"
+    />
+    <!-- <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">!-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='vendor/venobox/venobox.css')}}"
+    />
 
-  <!-- Google Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" >
+    <!-- Template Main CSS File -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='css/style.css')}}"
+    />
+  </head>
 
-  <!-- Vendor CSS Files -->
-<!--  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">!-->
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}">
- <!-- <link href="assets/vendor/ionicons/css/ionicons.min.css" rel="stylesheet">!-->
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/ionicons/css/ionicons.min.css')}}">
-  <!--<link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">!-->
-   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/animate.css/animate.min.css')}}">
-  <!--<link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">!-->
-   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css')}}">
- <!-- <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">!-->
-     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/venobox/venobox.css')}}">
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header">
+      <div class="container">
+        <div id="logo" class="pull-left">
+          <h1><a href="#intro" class="scrollto">PetCare</a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="#intro"><img src="static/img/petcarelogo.jpeg" alt=""></a>-->
+        </div>
 
-
-  <!-- Template Main CSS File -->
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
-
-
-</head>
-
-<body>
-
-  <!-- ======= Header ======= -->
-  <header id="header">
-    <div class="container">
-
-      <div id="logo" class="pull-left">
-       <h1><a href="#intro" class="scrollto">PetCare</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="#intro"><img src="static/img/petcarelogo.jpeg" alt=""></a>-->
+        <nav id="nav-menu-container">
+          <ul class="nav-menu">
+            <li class="menu-active"><a href="#intro">Home</a></li>
+            <li><a href="#features">Features</a></li>
+          </ul>
+        </nav>
+        <!-- #nav-menu-container -->
       </div>
+    </header>
+    <!-- End Header -->
 
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="#features">Features</a></li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-  </header><!-- End Header -->
-
-  <!-- ======= Intro Section ======= -->
-  <section id="intro">
-
-    <div class="intro-text">
-      <h2>Welcome to Pet Care</h2>
-      <p>Veterinary management solutions</p>
-      <a href="#contact" class="btn-get-started scrollto">Log in</a>
-      <div class="error-message">
-        {{error}}
-    </div>
-      <!-- <a href="#about" class="btn-get-started scrollto">Sign up </a>!-->
-
-
-    </div>
-<!--
+    <!-- ======= Intro Section ======= -->
+    <section id="intro">
+      <div class="intro-text">
+        <h2>Welcome to Pet Care</h2>
+        <p>Veterinary management solutions</p>
+        <a href="#contact" class="btn-get-started scrollto">Log in</a>
+        <div class="error-message">
+          {{error}}
+        </div>
+        <!-- <a href="#about" class="btn-get-started scrollto">Sign up </a>!-->
+      </div>
+      <!--
     <div class="product-screens">
 
       <div class="product-screen-1 wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.6s">
@@ -89,124 +108,142 @@
       </div>
 
     </div>-->
-
-  </section><!-- End Intro Section -->
- <main id="main">
-
- <!-- =======Log in section ======= -->
+    </section>
+    <!-- End Intro Section -->
+    <main id="main">
+      <!-- =======Log in section ======= -->
       <section id="contact" class="section-bg">
-      <div class="container-fluid">
-        <div class="section-header">
-          <h3 class="section-title">Log In</h3>
-          <span class="section-divider"></span>
-          <p class="section-description">Enter your email and password and lets go start</p>
-        </div>
-        <div class="row wow fadeInUp">
-
-          <div class="col-lg-4 col-md-4">
-            
-
+        <div class="container-fluid">
+          <div class="section-header">
+            <h3 class="section-title">Log In</h3>
+            <span class="section-divider"></span>
+            <p class="section-description">
+              Enter your email and password and lets go start
+            </p>
           </div>
+          <div class="row wow fadeInUp">
+            <div class="col-lg-4 col-md-4"></div>
 
-
-              <form  method="post" role="form" class="php-email-form">
-                <div class="form-row">
-                  <div class="form-group col-lg-12">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="email" data-rule="email" data-msg="Please enter a valid email">
-                    <div class="validate"></div>
-                  </div>
-
-                  <div class="form-group col-lg-12">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="password" data-rule="email" data-msg="Please enter a valid password">
-                    <div class="validate"></div>
-                  </div>
-
-
+            <form method="post" role="form" class="php-email-form">
+              <div class="form-row">
+                <div class="form-group col-lg-12">
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    id="email"
+                    placeholder="email"
+                    data-rule="email"
+                    data-msg="Please enter a valid email"
+                  />
+                  <div class="validate"></div>
                 </div>
 
-
-                <div class="mb-3">
-                  <div class="loading">Loading</div>
-                  
+                <div class="form-group col-lg-12">
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    id="password"
+                    placeholder="password"
+                    data-rule="email"
+                    data-msg="Please enter a valid password"
+                  />
+                  <div class="validate"></div>
                 </div>
+              </div>
 
-                <div class="text-center"><button type="submit" >Submit</button></div>
-              </form>
+              <div class="mb-3">
+                <div class="loading">Loading</div>
+              </div>
 
-
-
-
+              <div class="text-center">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </section>
+      <!-- End log in Section -->
 
-    </section><!-- End log in Section -->
-
-
-   <!-- ======= Featuress Section ======= -->
-    <section id="features">
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-8 offset-lg-4">
-            <div class="section-header wow fadeIn" data-wow-duration="1s">
-              <h3 class="section-title">Product Featuress</h3>
-              <span class="section-divider"></span>
+      <!-- ======= Featuress Section ======= -->
+      <section id="features">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 offset-lg-4">
+              <div class="section-header wow fadeIn" data-wow-duration="1s">
+                <h3 class="section-title">Product Featuress</h3>
+                <span class="section-divider"></span>
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-4 col-md-5 features-img">
-            <img src="static/img/product-features.png" alt="" class="wow fadeInLeft">
-          </div>
+            <div class="col-lg-4 col-md-5 features-img">
+              <img
+                src="static/img/product-features.png"
+                alt=""
+                class="wow fadeInLeft"
+              />
+            </div>
 
-          <div class="col-lg-8 col-md-7 ">
-
-            <div class="row">
-
-              <div class="col-lg-6 col-md-6 box wow fadeInRight">
-                <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
-                <h4 class="title"><a href="">Treatment management</a></h4>
-                <p class="description">Get full information about pet treatments.</p>
-              </div>
-              <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.1s">
-                <div class="icon"><i class="ion-ios-flask-outline"></i></div>
-                <h4 class="title"><a href="">Cell management</a></h4>
-                <p class="description">Manage the cells in your veterinary clinic in order to save time</p>
-              </div>
-              <div class="col-lg-12 col-md-6 box wow fadeInRight" data-wow-delay="0.2s">
-                <div class="icon"><i class="ion-social-buffer-outline"></i></div>
-                <h4 class="title"><a href="">Manage treatment rooms</a></h4>
-                <p class="description"> Manage treatments rooms in real time to save pets life.</p>
-              </div>
-              <!--
+            <div class="col-lg-8 col-md-7">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 box wow fadeInRight">
+                  <div class="icon">
+                    <i class="ion-ios-speedometer-outline"></i>
+                  </div>
+                  <h4 class="title"><a href="">Treatment management</a></h4>
+                  <p class="description">
+                    Get full information about pet treatments.
+                  </p>
+                </div>
+                <div
+                  class="col-lg-6 col-md-6 box wow fadeInRight"
+                  data-wow-delay="0.1s"
+                >
+                  <div class="icon"><i class="ion-ios-flask-outline"></i></div>
+                  <h4 class="title"><a href="">Cell management</a></h4>
+                  <p class="description">
+                    Manage the cells in your veterinary clinic in order to save
+                    time
+                  </p>
+                </div>
+                <div
+                  class="col-lg-12 col-md-6 box wow fadeInRight"
+                  data-wow-delay="0.2s"
+                >
+                  <div class="icon">
+                    <i class="ion-social-buffer-outline"></i>
+                  </div>
+                  <h4 class="title"><a href="">Manage treatment rooms</a></h4>
+                  <p class="description">
+                    Manage treatments rooms in real time to save pets life.
+                  </p>
+                </div>
+                <!--
               <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.3s">
                 <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
                 <h4 class="title"><a href="">Magni Dolores</a></h4>
                 <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum dinoun trade capsule.</p>
               </div>
-              -->
+              --></div>
             </div>
-
           </div>
-
         </div>
+      </section>
+      <!-- End Featuress Section -->
+    </main>
+    <!-- End #main -->
 
-      </div>
-
-    </section><!-- End Featuress Section -->
-
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 text-lg-left text-center">
-          <div class="copyright">
-            &copy; Copyright <strong>PetCare team</strong>. All Rights Reserved
-          </div>
-         <!--
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 text-lg-left text-center">
+            <div class="copyright">
+              &copy; Copyright <strong>PetCare team</strong>. All Rights
+              Reserved
+            </div>
+            <!--
           <div class="credits">
 
             All the links in the footer should remain intact.
@@ -217,41 +254,36 @@
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
           </div>
            -->
-        </div>
-        <div class="col-lg-6">
-          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
-            <!--
+          </div>
+          <div class="col-lg-6">
+            <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+              <!--
             <a href="#intro" class="scrollto">Back to top</a>
 
             <a href="#about" class="scrollto">About</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>
             !-->
-          </nav>
+            </nav>
+          </div>
         </div>
       </div>
-    </div>
-  </footer><!-- End  Footer -->
+    </footer>
+    <!-- End  Footer -->
 
-  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="static/vendor/jquery/jquery.min.js"></script>
-  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="static/vendor/jquery.easing/jquery.easing.min.js"></script>
-  <script src="atatic/vendor/php-email-form/validate.js"></script>
-  <script src="static/vendor/wow/wow.min.js"></script>
-  <script src="static/vendor/venobox/venobox.min.js"></script>
-  <script src="static/vendor/superfish/superfish.min.js"></script>
-  <script src="static/vendor/hoverIntent/hoverIntent.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="atatic/vendor/php-email-form/validate.js"></script>
+    <script src="static/vendor/wow/wow.min.js"></script>
+    <script src="static/vendor/venobox/venobox.min.js"></script>
+    <script src="static/vendor/superfish/superfish.min.js"></script>
+    <script src="static/vendor/hoverIntent/hoverIntent.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="static/js/main.js"></script>
-
-
-
-
-
-</body>
-
+    <!-- Template Main JS File -->
+    <script src="static/js/main.js"></script>
+  </body>
 </html>
