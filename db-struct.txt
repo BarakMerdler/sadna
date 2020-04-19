@@ -28,6 +28,8 @@ class Users(Document):
 class activePet:
     pet_id: int
     vet_id:int
+    place:(temp/cage/oper) //can be one the 3 - temp (temp cage)/cage (fix cage)/oper (operition room)
+    numberRoom: int //number of the room when he stay - not intinzeled when he in temp
     startDate: Date
     treatments: [{drug:string, descriptiom: string}]
     nextStep: {when: Date, what:string}
