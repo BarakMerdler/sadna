@@ -78,16 +78,16 @@ def index():
             session['vet_name'] = vet['name']
             session['no_oper_room'] = vet['no_oper_room']
             session['no_cage'] = vet['no_cage']
-            #!------------------------------!
-            # TODO get the active care animals
-            #!------------------------------!
             return redirect(url_for('home'))
-        return render_template('/landingPage.html',error='Please check your email and/or password')
+        return render_template('/landingPage.html', error='Please check your email and/or password')
     return render_template('/landingPage.html')
 
 # Route of the main app
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+        #!------------------------------!
+        # TODO get the active care animals
+        #!------------------------------!
     if request.method == 'POST':
         return 'POST at HOME'
     return render_template('/home.html')
@@ -108,7 +108,6 @@ def addpet():
 def addNewCustomer():
     customerMail = request.args['email']
     if request.method == 'POST':
-        print(request.form)
         petsNames = request.form.getlist('name')
         petsTypes = request.form.getlist('type')
         userName = request.form['custNmae']
@@ -141,14 +140,15 @@ def addNewCustomer():
         except Exception as e:
             print(e)
 
-        return redirect(url_for('setNewPetTreatment', email=email))
+        return redirect(url_for('setNewPetTreatment', email=customerMail))
     return render_template('/setNewPet.html', customerMail=customerMail)
 
 # Route to set the pet to treatment
 @app.route('/setNewPetTreatment', methods=['GET', 'POST'])
 def setNewPetTreatment():
     if request.method == 'POST':
-        petId = request.form['petsId']
+        petId = int(request.form['petsId'])
+        print(petId)
         try:
             pets.update_one({"_id": petId}, {
                 "$set": {
@@ -157,8 +157,17 @@ def setNewPetTreatment():
             })
         except Exception as e:
             print(e)
-
-        return 'POST AT TEATMENT'
+        try:
+            newActivePet = {
+                "pet_id": petId,
+                "vet_id": session['vetId'],
+                "place": "temp",
+                "startDate": datetime.utcnow()
+            }
+            activePet.insert_one(newActivePet)
+        except Exception as e:
+            print(e)
+        return redirect(url_for('home'))
     customerMail = request.args['email']
     customer = findCustomer(customerMail)
     cusromerPets = []
@@ -259,4 +268,4 @@ def image():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True, port=80)

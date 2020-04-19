@@ -1,126 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>PETCARE</title>
+    <meta content="" name="descriptison" />
+    <meta content="" name="keywords" />
 
-  <title>PETCARE</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="{{ url_for('static',filename='img/favicon.png')}}" rel="icon" />
+    <link
+      href="{{ url_for('static',filename='img/apple-touch-icon.png')}}"
+      rel="apple-touch-icon"
+    />
 
-  <!-- Favicons -->
-  <link href="{{ url_for('static',filename='img/favicon.png')}}" rel="icon">
-  <link href="{{ url_for('static',filename='img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link
+      href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static',filename='vendor/ionicons/css/ionicons.min.css')}}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static',filename='vendor/animate.css/animate.min.css')}}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static',filename='vendor/font-awesome/css/font-awesome.min.css')}}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static',filename='vendor/venobox/venobox.css')}}"
+      rel="stylesheet"
+    />
 
-  <!-- Vendor CSS Files -->
-  <link href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{ url_for('static',filename='vendor/ionicons/css/ionicons.min.css')}}" rel="stylesheet">
-  <link href="{{ url_for('static',filename='vendor/animate.css/animate.min.css')}}" rel="stylesheet">
-  <link href="{{ url_for('static',filename='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-  <link href="{{ url_for('static',filename='vendor/venobox/venobox.css')}}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static',filename='css/style.css') }}"
+      rel="stylesheet"
+    />
 
-  <!-- Template Main CSS File -->
-  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+    {% block head %} {% endblock %}
+  </head>
 
-  {% block head %} {% endblock %}
-
-
-
-</head>
-
-<body>
-
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="header-fixed">
-    <div class="container">
-
-      <div id="logo" class="pull-left">
-        <h1><a href="#intro" class="scrollto">PetCare</a></h1>
-      </div>
-
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="#about">Main Table</a></li>
-          <li><a href="{{ url_for('addpet') }}">Add Pet</a></li>
-          <li><a href="#pricing">Rooms editing</a></li>
-          <li><a href="#team">Team</a></li>
-
-
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-  </header><!-- End Header -->
-
-
-  <main id="main">
-
-    
-
-    <section id="contact" class="section-bg">
-      <div class="container-fluid">
-        <div class="section-header">
-          <h3 class="section-title"></h3>
-          <span class="section-divider"></span>
-          <p class="section-description">Enter  email to search</p>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header-fixed">
+      <div class="container">
+        <div id="logo" class="pull-left">
+          <h1><a href="{{ url_for('home') }}" class="scrollto">PetCare</a></h1>
         </div>
-        <div class="row wow fadeInUp">
 
-  
-
-          {% block content %}
-          
-        {% endblock %}
-              
-
-        </div>
+        <nav id="nav-menu-container">
+          <ul class="nav-menu">
+            <li class="menu-active">
+              <a href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li><a href="#">Main Table</a></li>
+            <li><a href="{{ url_for('addpet') }}">Add Pet</a></li>
+            <li><a href="#">Rooms editing</a></li>
+            <li><a href="#">Team</a></li>
+          </ul>
+        </nav>
+        <!-- #nav-menu-container -->
       </div>
+    </header>
+    <!-- End Header -->
 
-    </section><!-- End log in Section -->
-  </main>
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 text-lg-left text-center">
-          <div class="copyright">
-            &copy; Copyright <strong>PETCARE TEAM</strong>. All Rights Reserved
+    <main id="main">
+      <section id="contact" class="section-bg">
+        <div class="container-fluid">
+          <div class="section-header">
+            <h3 class="section-title"></h3>
+            <span class="section-divider"></span>
           </div>
-
+          <div class="row wow fadeInUp">
+            {% block content %} {% endblock %}
+          </div>
         </div>
-        <div class="col-lg-6">
-          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
-            <a href="#intro" class="scrollto">Home</a>
-            <a href="#about" class="scrollto">About</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
-          </nav>
+      </section>
+      <!-- End log in Section -->
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 text-lg-left text-center">
+            <div class="copyright">
+              &copy; Copyright <strong>PETCARE TEAM</strong>. All Rights
+              Reserved
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+              <a href="#intro" class="scrollto">Home</a>
+              <a href="#about" class="scrollto">About</a>
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Use</a>
+            </nav>
+          </div>
         </div>
       </div>
-    </div>
-  </footer><!-- End  Footer -->
+    </footer>
+    <!-- End  Footer -->
 
-  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="{{ url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{ url_for('static',filename='vendor/jquery.easing/jquery.easing.min.js')}} "></script>
-  <script src="{{ url_for('static',filename='vendor/php-email-form/validate.js')}}"></script>
-  <script src="{{ url_for('static',filename='vendor/wow/wow.min.js')}}"></script>
-  <script src="{{ url_for('static',filename='vendor/venobox/venobox.min.js')}}"></script>
-  <script src="{{ url_for('static',filename='vendor/superfish/superfish.min.js')}}"></script>
-  <script src="{{ url_for('static',filename='vendor/hoverIntent/hoverIntent.js')}}"></script>
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='vendor/jquery.easing/jquery.easing.min.js')}} "></script>
+    <script src="{{ url_for('static',filename='vendor/php-email-form/validate.js')}}"></script>
+    <script src="{{ url_for('static',filename='vendor/wow/wow.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='vendor/venobox/venobox.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='vendor/superfish/superfish.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='vendor/hoverIntent/hoverIntent.js')}}"></script>
 
-  <!-- Template Main JS File -->
-  <script src="{{ url_for('static',filename='js/main.js') }}"></script>
-
-</body>
-
+    <!-- Template Main JS File -->
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+  </body>
 </html>

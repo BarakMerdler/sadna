@@ -4,3 +4,4 @@ passlib
 flask-debugtoolbar
 mongoengine
 dnspython
+numpy
