@@ -48,6 +48,10 @@ def findPet(petId):
     return pets.find_one({"_id": petId})
 
 
+def findActivePet(vedId):
+    return activePet.find({"vet_id": vedId})
+
+
 PATH_TO_TEST_IMAGES_DIR = './images'
 
 #! Class of pet
@@ -58,6 +62,12 @@ class animal(object):
         self._id = _id
         self._name = _name
         self._type = _type
+
+
+class activeAnimal(object):
+    def __init__(self, animal, place):
+        self.animal = animal
+        self.place = place
 
 
 # Route for login as a user
@@ -85,12 +95,26 @@ def index():
 # Route of the main app
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-        #!------------------------------!
-        # TODO get the active care animals
-        #!------------------------------!
     if request.method == 'POST':
         return 'POST at HOME'
-    return render_template('/home.html')
+    activePetInVet = findActivePet(session['vetId'])
+    petCage = []
+    petOper = []
+    petTemp = []
+    petWaiting = []
+    for pet in activePetInVet:
+        tempPet = findPet(pet['pet_id'])
+        tempAnimal = animal(pet['pet_id'], tempPet['name'], tempPet['type'])
+        setAnimal = activeAnimal(tempAnimal, pet['place'])
+        if pet['place'] == 'oper':
+            petOper.append(setAnimal)
+        if pet['place'] == 'cage':
+            petCage.append(setAnimal)
+        if pet['place'] == 'temp':
+            petTemp.append(setAnimal)
+        if pet['place'] == 'waiting':
+            petWaiting.append(setAnimal)
+    return render_template('/home.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
 
 # Route to add pet (new or no)
 @app.route('/addpet', methods=['GET', 'POST'])
@@ -161,7 +185,7 @@ def setNewPetTreatment():
             newActivePet = {
                 "pet_id": petId,
                 "vet_id": session['vetId'],
-                "place": "temp",
+                "place": "waiting",
                 "startDate": datetime.utcnow()
             }
             activePet.insert_one(newActivePet)
