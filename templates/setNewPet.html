@@ -1,5 +1,89 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block content %}
+<form action="" method="POST" class="col-lg-4 col-md-4" id="myForm">
+  <div class="form-row">
+    <p>Customer doesnt excist! lets create a new customer </p>
+    <div id="petInputDiv">
+      <div class="form-group col-lg-12">
+        <input type="email" class="form-control" name="custNmae" id="custNmae" placeholder="Customer Name"
+          data-rule="custNmae" data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
+
+
+      <div class="form-group col-lg-12">
+        <input type="text" class="form-control" name="name" id="petName" placeholder="Pet's Name" data-rule="petName"
+          data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
+
+      <div class="form-group col-lg-12">
+        <input type="text" class="form-control" name="type" id="petType" placeholder="Pet's Type" data-rule="petType"
+          data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
+    </div>
+    <div class="text-center col-lg-6"><button id="createFieldBtn">Add Pet</button></div>
+    <div class="text-center col-lg-6"><button value="submit" id="mySubmmit">Submit</button></div>
+
+
+</form>
+
+
+
+</div>
+
+
+
+<script>
+  let i = 1;
+  document.getElementById("mySubmmit").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    console.log($("#myForm").serialize());
+    $("#myForm").submit();
+  });
+  document
+    .getElementById("createFieldBtn")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      const myDiv = document.getElementById("petInputDiv");
+      // Create new input field
+      
+      //newInput.value = "Pet Name";
+      var newInputType = document.createElement("INPUT");
+      newInputType.name = "type";
+      newInputType.type = "text";
+      newInputType.placeholder = "Pet's Name";
+      newInputType.className="form-control";
+
+      var newInput = document.createElement("INPUT");
+      newInput.name = "name";
+      newInput.type = "text";
+      newInput.placeholder = "Pet's Type";
+      newInput.className="form-control";
+      //newInputType.value = "Pet Type";
+
+      var newlabel = document.createElement("Label");
+      var newlabelType = document.createElement("Label");
+      newlabel.setAttribute("for", "name");
+      //newlabel.innerHTML = "Pet Name:";
+      newlabelType.setAttribute("for", "type");
+      //newlabelType.innerHTML = "Pet Type:";
+      myDiv.appendChild(document.createElement("hr"));
+      myDiv.appendChild(newlabel);
+      myDiv.appendChild(newInputType);
+      myDiv.appendChild(document.createElement("br"));
+      myDiv.appendChild(newlabelType);
+      myDiv.appendChild(newInput);
+      myDiv.appendChild(document.createElement("br"));
+      i++;
+    });
+</script>
+{% endblock %}
+
+
+
 <!--
 <div class="search-customers">
   <form action="" method="POST" id="myForm">
@@ -23,78 +107,3 @@
 </div>
 
 -->
-<form action="" method="POST" class="col-lg-4 col-md-4" id="myForm">
-  <div class="form-row">
-    <div id="petInputDiv">
-    <div class="form-group col-lg-12">
-      <input type="email" class="form-control" name="custNmae" id="custNmae" placeholder="Customer Name" data-rule="custNmae" data-msg="Please enter">
-      <div class="validate"></div>    
-   </div>
-
-   <div class="form-group col-lg-12">
-    <input type="text" class="form-control" name="email" id="email" placeholder="email" data-rule="email" data-msg="Please enter a valid email">
-    <div class="validate"></div>    
- </div>
-
- <div class="form-group col-lg-12">
-  <input type="text" class="form-control" name="name" id="petName" placeholder="Pet's Name" data-rule="petName" data-msg="Please enter">
-  <div class="validate"></div>    
-</div>
-
-<div class="form-group col-lg-12">
-  <input type="text" class="form-control" name="type" id="petType" placeholder="Pet's Type" data-rule="petType" data-msg="Please enter">
-  <div class="validate"></div>    
-</div>
-</div>
-  <div class="text-center col-lg-6"><button id="createFieldBtn" >Add Pet</button></div>
-  <div class="text-center col-lg-6"><button value="submit" id="mySubmmit" >Submit</button></div>
-
-
-</form>
-
- 
-
-</div>
-
-
-
-<script>
-  let i = 1;
-  document.getElementById("mySubmmit").addEventListener("click", function (e) {
-    e.preventDefault();
-
-    console.log($("#myForm").serialize());
-    $("#myForm").submit();
-  });
-  document
-    .getElementById("createFieldBtn")
-    .addEventListener("click", function (e) {
-      e.preventDefault();
-      const myDiv = document.getElementById("petInputDiv");
-      // Create new input field
-      var newInput = document.createElement("INPUT");
-      newInput.name = "name";
-      newInput.type = "text";
-      newInput.value = "Pet Name";
-      var newInputType = document.createElement("INPUT");
-      newInputType.name = "type";
-      newInputType.type = "text";
-      newInputType.value = "Pet Type";
-
-      var newlabel = document.createElement("Label");
-      var newlabelType = document.createElement("Label");
-      newlabel.setAttribute("for", "name");
-      newlabel.innerHTML = "Pet Name:";
-      newlabelType.setAttribute("for", "type");
-      newlabelType.innerHTML = "Pet Type:";
-      myDiv.appendChild(document.createElement("hr"));
-      myDiv.appendChild(newlabel);
-      myDiv.appendChild(newInput);
-      myDiv.appendChild(document.createElement("br"));
-      myDiv.appendChild(newlabelType);
-      myDiv.appendChild(newInputType);
-      myDiv.appendChild(document.createElement("br"));
-      i++;
-    });
-</script>
-{% endblock %}
