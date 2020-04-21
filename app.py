@@ -99,8 +99,8 @@ def addpet():
         userDetails = request.form
         email = userDetails['email']
         if (findCustomer(email)):
-            return redirect(url_for('addNewCustomer', email=email))
-        return redirect(url_for('setNewPetTreatment', email=email))
+            return redirect(url_for('setNewPetTreatment', email=email))
+        return redirect(url_for('addNewCustomer', email=email))
     return render_template('/customers.html')
 
 # Route to set new customer and his pets
