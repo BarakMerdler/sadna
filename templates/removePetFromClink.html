@@ -19,7 +19,7 @@
       contentType: "application/json;charset=UTF-8",
       data: id.value,
       success: function (data) {
-        alert("removed" + id.value);
+        window.location.href = "{{url_for('home')}}";
       },
       error: function (data) {
         alert("Deleted Pet ID " + id.value);

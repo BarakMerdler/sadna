@@ -308,16 +308,15 @@ def removePetFromClink():
     return render_template('/removePetFromClink.html', animals=animals)
 
 
-@app.route('/deleteFromActive', methods=['GET', 'POST'])
+@app.route('/deleteFromActive', methods=['POST'])
 def deleteFromActive():
     petId = request.get_json()
-    removeFromActive(petId)
-    response = app.response_class(
-        response=json.dumps("%s removed" % (petId)),
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+    try:
+        removeFromActive(petId)
+    except Exception as e:
+        print(e)
+        return redirect(url_for('removePetFromClink'))
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
