@@ -16,7 +16,7 @@ app.debug = True
 
 # for session
 app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
-toolbar = DebugToolbarExtension(app)
+#toolbar = DebugToolbarExtension(app)
 
 #! Set the DB connection
 client = MongoClient(
@@ -50,6 +50,13 @@ def findPet(petId):
 
 def findActivePet(vedId):
     return activePet.find({"vet_id": vedId})
+
+
+def removeFromActive(petId):
+    result = activePet.delete_one({"pet_id": petId})
+    if result == 1:
+        return 200
+    return 404
 
 
 PATH_TO_TEST_IMAGES_DIR = './images'
@@ -172,7 +179,6 @@ def addNewCustomer():
 def setNewPetTreatment():
     if request.method == 'POST':
         petId = int(request.form['petsId'])
-        print(petId)
         try:
             pets.update_one({"_id": petId}, {
                 "$set": {
@@ -289,6 +295,29 @@ def image():
     data = decode('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
     os.remove('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
     return Response("%s saved./n data: %s " % (f, data))
+
+# API to remove pet from active care
+@app.route('/removePetFromClink')
+def removePetFromClink():
+    activePetInVet = findActivePet(session['vetId'])
+    animals = []
+    for pet in activePetInVet:
+        tempPet = findPet(pet['pet_id'])
+        tempAnimal = animal(pet['pet_id'], tempPet['name'], tempPet['type'])
+        animals.append(tempAnimal)
+    return render_template('/removePetFromClink.html', animals=animals)
+
+
+@app.route('/deleteFromActive', methods=['GET', 'POST'])
+def deleteFromActive():
+    petId = request.get_json()
+    removeFromActive(petId)
+    response = app.response_class(
+        response=json.dumps("%s removed" % (petId)),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 if __name__ == '__main__':

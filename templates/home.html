@@ -68,15 +68,17 @@
   <div id="div2">
     <div><h7>Available Cabins</h7></div>
     {% for pet in petCage %}
-    <div
-      id=""
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
-    >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
+    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div
+        id=""
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+        style="margin: 0; padding: 0;"
+      >
+        <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+        <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+        <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
+      </div>
     </div>
     {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
     for index in range(session.get("no_cage")) %}
