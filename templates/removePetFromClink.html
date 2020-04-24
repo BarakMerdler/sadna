@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
+{%for pet in animals %}
+
+<div id="" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <p>name: {{pet._name}}</p>
+  <p>type: {{pet._type}}</p>
+  <p>id: {{pet._id}}</p>
+  <button onclick="remove(this)" name="pet_id" value="{{pet._id}}">
+    click
+  </button>
+</div>
+{% endfor %}
+
+<script>
+  function remove(id) {
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('deleteFromActive')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: id.value,
+      success: function (data) {
+        alert("removed" + id.value);
+      },
+      error: function (data) {
+        alert("Deleted Pet ID " + id.value);
+      },
+    });
+  }
+</script>
+
+{% endblock %}
