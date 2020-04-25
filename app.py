@@ -121,7 +121,7 @@ def home():
             petTemp.append(setAnimal)
         if pet['place'] == 'waiting':
             petWaiting.append(setAnimal)
-    return render_template('/home.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
+    return render_template('/api.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
 
 # Route to add pet (new or no)
 @app.route('/addpet', methods=['GET', 'POST'])
@@ -317,6 +317,22 @@ def deleteFromActive():
         print(e)
         return redirect(url_for('removePetFromClink'))
     return redirect(url_for('home'))
+
+# API to update place for pet at the vet
+@app.route('/update')
+def update():
+    activePetInVet = findActivePet(session['vetId'])
+    animals = []
+    for pet in activePetInVet:
+        tempPet = findPet(pet['pet_id'])
+        tempAnimal = animal(pet['pet_id'], tempPet['name'], tempPet['type'])
+        animals.append(tempAnimal)
+    return render_template('/update.html', animals=animals)
+
+
+@app.route('/updateActivePetPlace')
+def updateActivePetPlace():
+    return 'succes'
 
 
 if __name__ == '__main__':
