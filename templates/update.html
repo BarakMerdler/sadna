@@ -11,19 +11,11 @@
 </div>
 {% endfor %} {% endblock %} {% block script %}
 <script>
-  function remove(id) {
-    $.ajax({
-      type: "POST",
-      url: "{{url_for('deleteFromActive')}}",
-      contentType: "application/json;charset=UTF-8",
-      data: id.value,
-      success: function (data) {
-        window.location.href = "{{url_for('home')}}";
-      },
-      error: function (data) {
-        alert("Deleted Pet ID " + id.value);
-      },
-    });
+  function test() {
+    console.log("update page");
   }
+  window.onload = function () {
+    test();
+  };
 </script>
 {% endblock %}
