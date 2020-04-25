@@ -1,21 +1,37 @@
 {% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
 {%for pet in animals %}
 
-<div id="" ondrop="drop(event)" ondragover="allowDrop(event)">
-  <p>name: {{pet._name}}</p>
-  <p>type: {{pet._type}}</p>
-  <p>id: {{pet._id}}</p>
-  <button onclick="remove(this)" name="pet_id" value="{{pet._id}}">
-    click
-  </button>
+<div id="">
+  <p>name: {{pet.animal._name}}</p>
+  <p>type: {{pet.animal._type}}</p>
+  <p>place: {{pet.place}}</p>
+  <select name="" id="{{pet.animal._id}}">
+    <option value="oper"  {% if pet.place == "oper" %} selected {% endif %}>Treatment's rooms</option>
+    <option value="cage"  {% if pet.place == "cage" %} selected {% endif %}>Fixed Cages</option>
+    <option value="temp"  {% if pet.place == "temp" %} selected {% endif %}>Travled Cages</option>
+    <option value="waiting" {% if pet.place == "waiting" %} selected {% endif %}>Waiting Room</option>
+  </select>
+  <button value="{{pet.animal._id}}" onclick="update(this)">click</button>
 </div>
-{% endfor %} {% endblock %} {% block script %}
+
+{% endfor %} {% endblock %}
+{% block script %}
 <script>
-  function test() {
-    console.log("update page");
+  function update(id){
+    console.log(id.value)
+    const val = $(`#${id.value} option:selected` ).val();
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('updateActivePetPlace')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify({id:id.value, place:val}),
+      success: function (result) {
+        alert('success' + result)
+      },
+      error: function (data) {
+        alert("Deleted Pet ID " + id.value);
+      },
+    });
   }
-  window.onload = function () {
-    test();
-  };
 </script>
 {% endblock %}
