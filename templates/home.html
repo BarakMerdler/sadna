@@ -1,126 +1,317 @@
-{% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
-<section id="team">
-  <h2>Drag and Drop</h2>
+{% extends 'base.html' %}
 
-  <p>Drag the image back and forth between the columns</p>
+{% block head %} 
 
-  <div id="div4">
-    <!-- תמונות גינריות של חיות שצריכות לקבל id  -->
+<style>
 
-    <!--    <img
-      src="assets/img/animals/cow.png"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag1"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/tiger.png"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag2"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/giraffe.png"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag3"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/lion.jpg"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag4"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/pinguin.jpg"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag5"
-      width="88"
-      height="50"
-    />
--->
-    <div><h7>Waiting Room</h7></div>
-    {% for pet in petWaiting %}
-    <div
-      id=""
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
-    >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
-    </div>
+
+  table {
+    font-family: arial, sans-serif;
+   
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width:10%;
+    height:100px;
+    
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  
+  .datasize{
+
+    width:100%;
+    height: 10px;
+
+
+  }
+  
+  
+  </style>
+
+{% endblock %} 
+
+{% block content %}
+
+
+
+
+
+  <table>
+    <tr>
+ 
+    </tr>
+
+
+
+   
+ <!--Waiting room-->
+
+
+
+    <tr>
+
+      <td>  Waiting room </td>
+
+      <div>
+      
+     {% for pet in petWaiting %}
+
+     <td >
+      
+        <div  draggable="true" ondragstart="drag(event)" id="drag1" >
+
+        <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
+
+        {{pet.animal._name}} the {{pet.animal._type}} 
+
+        <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+          <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+          <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
+        </div>
+
+    </td>
+
     {% endfor %}
-  </div>
 
-  <!-- התאים של החיות שמקבלים את התמונות -->
+     </div>
 
-  <div id="div2">
-    <div><h7>Available Cabins</h7></div>
-    {% for pet in petCage %}
-    <div
-      id=""
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
-    >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
-    </div>
-    {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
-    for index in range(session.get("no_cage")) %}
-    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
-      Empty
-    </div>
-    {% endfor %}
-  </div>
+    </tr>
 
-  <div id="div2">
-    <div><h7>Available treatment's rooms</h7></div>
-    {% for pet in petOper %}
-    <div
-      id=""
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
-    >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
+
+
+ <!--Cages-->
+
+
+
+    <tr>
+      <td> Cages </td>
+
+      {% for pet in petCage %}
+
+      <td>
+
+        
+    
+        <div   draggable="true" ondragstart="drag(event)" id="drag1"   width="88"   height="50"  >
+    
+          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+    
+          <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+    
+          <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+            <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+            <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
+        </div>
+    
+        <td>
+    
+        {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
+        for index in range(session.get("no_cage")) %}
+    
+        <td >
+
+        
+      
+          <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+          
+            <h7> {{no_cage}} Empty</h7>
+           
+          
+          </div>
+    
+      
+     
+       </td>
+    
+      {% endfor %}
+
+      
+   
+    </tr>
+
+    <!--Operations rooms-->
+
+
+    <tr>
+      <td> Operations rooms </td>
+
+      {% for pet in petOper %}
+
+      <td>
+
+        
+    
+        <div   draggable="true" ondragstart="drag(event)" id="drag1"  style="margin: 0; padding: 0;"  >
+    
+          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+    
+          <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+    
+          <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+            <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+            <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
+        </div>
+    
+        <td>
+    
+        {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
+         {% for index in range(session.get("no_oper_room")) %}
+    
+        <td>
+      
+
+          <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+          
+            <h7> {{no_oper_room}} Empty</h7>
+           
+          
+          </div>
+    
+      
+     
+       </td>
+    
+      {% endfor %}
+
+      
+   
+    </tr>
+
+
+<!--Temp Cages-->
+
+    <tr>
+      <td> Temp Cages </td>
+
+      {% for pet in petTemp %}
+
+      <td>
+
+        
+    
+        <div   draggable="true" ondragstart="drag(event)" id="drag1"  style="margin: 0; padding: 0;"  >
+    
+          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+    
+          <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+    
+          <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+            <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+            <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
+        </div>
+    
+        <td>
+    
+        {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
+         {% for index in range(session.get("no_oper_room")) %}
+    
+        <td>
+      
+
+          <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+          
+            <h7> {{no_oper_room}} Empty</h7>
+           
+          
+          </div>
+
+          
+    
+      
+     
+       </td>
+    
+      {% endfor %}
+
+      
+   
+    </tr>
+
+<!--Completion-->
+
+<tr >
+  <td> Completion </td>
+
+  {% for pet in petTemp %}
+
+  <td>
+
+    
+
+    <div   draggable="true" ondragstart="drag(event)" id="drag1"  style="margin: 0; padding: 0;"  >
+
+      <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+
+      <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+
+      <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+        <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+        <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
     </div>
-    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-    {% for index in range(session.get("no_oper_room")) %}
-    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
-      Empty
-    </div>
+
+    <td>
+
     {% endfor %}
-  </div>
-  <div><h7>Temp Cages</h7></div>
-  <div id="div2" style="display: flex; flex-direction: column; margin: auto;">
-    {% for pet in petTemp %}
-    <div
-      id=""
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
-    >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
+
+    
+    <td>
+      
+      <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+        <h7> {{no_oper_room}} Empty</h7>
+      </div>
+ 
+   </td>
+
+   
+   <td>
+      
+    <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+      <h7> {{no_oper_room}} Empty</h7>
     </div>
-    {% endfor %}
-  </div>
-</section>
+
+  </td>
+
+  <td>
+      
+    <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+      <h7> {{no_oper_room}} Empty</h7>
+    </div>
+
+  </td>
+
+  <td>
+      
+    <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+      <h7> {{no_oper_room}} Empty</h7>
+    </div>
+    
+
+   
+
+
+  </td>
+
+ 
+     
+  
+
+</tr>
+
+
+
+
+
+
+  </table>
+
+
+
 
 {%endblock%}
