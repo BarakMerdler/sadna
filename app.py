@@ -238,7 +238,7 @@ def admin():
         userName = userDetails['fullName']
         userMail = userDetails['email']
         if findUser(userMail):
-            return render_template('/adminLogIn.html', numPage=1, error='Mail is alredy in use')
+            return render_template('/adminLogIn.html',error='Mail is alredy in use')
         userPassword = sha256_crypt.encrypt(userDetails['password'])
         newUser = {
             "email": userMail,
@@ -252,7 +252,7 @@ def admin():
             return redirect(url_for('vetInit', email=userMail))
         except Exception as e:
             print(e)
-    return render_template('/adminLogIn.html', numPage=1)
+    return render_template('/adminLogIn.html')
 
 # Route to set new vent
 @app.route('/admin/vet', methods=['GET', 'POST'])
@@ -282,7 +282,7 @@ def vetInit():
         except Exception as e:
             print(e)
 
-    return render_template('/vetInit.html', numPage=2)
+    return render_template('/vetInit.html')
 
 
 @app.route('/video')

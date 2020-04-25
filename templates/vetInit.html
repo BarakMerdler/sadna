@@ -1,13 +1,28 @@
-{% extends "adminLayout.html" %} {% block title %} Register New Veterinary {%
-endblock %} {% block content %}
+{% extends 'adminLayout.html' %} {% block head %}  {%endblock %} {% block content %}
+<form action="" method="POST" class="col-lg-4 col-md-4">
+  <div class="form-row">
+    <p>Register New Veterinary </p>
+      
+      <div class="form-group col-lg-12">
+        <input type="text" class="form-control" name="name" id="name" placeholder="Veterinary name" data-rule="name"
+          data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
 
-<form action="" method="POST">
-  <label for="fname">Veterinary name:</label><br />
-  <input type="text" id="name" name="name" value="Veterinary Name" /><br />
-  <label for="lname">Address:</label><br />
-  <input type="text" id="address" name="address" value="Veterinary address" />
-  <br /><br />
-  <input type="submit" />
+      <div class="form-group col-lg-12">
+        <input type="text" class="form-control" name="address" id="address" placeholder="Veterinary address"
+          data-rule="address" data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
+  </div>
+    <div class="text-center col-lg-6"><button value="submit" >Submit</button></div>
+  
 </form>
 
+
 {% endblock %}
+
+
+
+
+
