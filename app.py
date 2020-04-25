@@ -53,10 +53,13 @@ def findActivePet(vedId):
 
 
 def removeFromActive(petId):
-    result = activePet.delete_one({"pet_id": petId})
-    if result == 1:
-        return 200
-    return 404
+    return activePet.delete_one({"pet_id": petId})
+
+
+def updatePetPlace(petId, newPlace):
+    result = activePet.update_one(
+        {"pet_id": int(petId)}, {"$set": {"place": str(newPlace)}})
+    return result.modified_count
 
 
 PATH_TO_TEST_IMAGES_DIR = './images'
@@ -321,18 +324,26 @@ def deleteFromActive():
 # API to update place for pet at the vet
 @app.route('/update')
 def update():
-    activePetInVet = findActivePet(session['vetId'])
     animals = []
+    activePetInVet = findActivePet(session['vetId'])
     for pet in activePetInVet:
         tempPet = findPet(pet['pet_id'])
         tempAnimal = animal(pet['pet_id'], tempPet['name'], tempPet['type'])
-        animals.append(tempAnimal)
+        animals.append(activeAnimal(tempAnimal, pet['place']))
     return render_template('/update.html', animals=animals)
 
 
-@app.route('/updateActivePetPlace')
+@app.route('/updateActivePetPlace', methods=['POST'])
 def updateActivePetPlace():
-    return 'succes'
+    data = request.get_json()
+    petId = data['id']
+    newPlace = data['place']
+    try:
+        x = updatePetPlace(petId, newPlace)
+    except Exception as e:
+        print(e)
+        return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
+    return 'success'
 
 
 if __name__ == '__main__':
