@@ -31,6 +31,8 @@
 
 
   }
+
+  
   
   
   </style>
@@ -43,10 +45,15 @@
 
 
 
+
+
+
+
+
+
+
   <table>
-    <tr>
- 
-    </tr>
+   
 
 
 
@@ -57,60 +64,70 @@
 
     <tr>
 
-      <td>  Waiting room </td>
+      <td> Waiting room </td>
+    
 
-      <div>
+    
       
      {% for pet in petWaiting %}
 
-     <td >
-      
-        <div  draggable="true" ondragstart="drag(event)" id="drag1" >
+        <td >
+          
+            <div  draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" >
 
-        <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
+             <p data-toggle="tooltip" title="name: {{pet.animal._name}}
+             type: {{pet.animal._type}}
+             place: {{pet.place}}">
 
-        {{pet.animal._name}} the {{pet.animal._type}} 
+            <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
 
-        <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-          <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-          <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
-        </div>
+            {{pet.animal._name}} the {{pet.animal._type}} 
 
-    </td>
+             </p>
 
-    {% endfor %}
+            </div>
 
-     </div>
+        </td>
 
-    </tr>
+     {% endfor %}
+
+   
+
+   </tr>
 
 
 
  <!--Cages-->
 
+ <tr>
 
+   <td> Cages </td>
 
-    <tr>
-      <td> Cages </td>
+   
+     
 
       {% for pet in petCage %}
 
       <td>
 
-        
+        <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"    >
+
+          <p data-toggle="tooltip" title="name: {{pet.animal._name}}
+          type: {{pet.animal._type}}
+          place: {{pet.place}}">
     
-        <div   draggable="true" ondragstart="drag(event)" id="drag1"   width="88"   height="50"  >
+          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
     
-          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
-    
-          <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+           {{pet.animal._name}} the {{pet.animal._type}}
+
+        </p>
     
           <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
             <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
             <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
         </div>
     
-        <td>
+      </td>
     
         {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
         for index in range(session.get("no_cage")) %}
@@ -121,7 +138,7 @@
       
           <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
           
-            <h7> {{no_cage}} Empty</h7>
+            {{no_cage}} Empty
            
           
           </div>
@@ -134,7 +151,7 @@
 
       
    
-    </tr>
+  </tr>
 
     <!--Operations rooms-->
 
@@ -148,18 +165,22 @@
 
         
     
-        <div   draggable="true" ondragstart="drag(event)" id="drag1"  style="margin: 0; padding: 0;"  >
+        <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  style="margin: 0; padding: 0;"  >
+
+          <p data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
     
-          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
     
-          <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+         {{pet.animal._name}} the {{pet.animal._type}}
+
+        </p>
     
           <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
             <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
             <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
         </div>
     
-        <td>
+      </td>
     
         {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
          {% for index in range(session.get("no_oper_room")) %}
@@ -169,7 +190,7 @@
 
           <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
           
-            <h7> {{no_oper_room}} Empty</h7>
+           {{no_oper_room}} Empty
            
           
           </div>
@@ -196,18 +217,22 @@
 
         
     
-        <div   draggable="true" ondragstart="drag(event)" id="drag1"  style="margin: 0; padding: 0;"  >
+        <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  style="margin: 0; padding: 0;"  >
+
+          <p data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
     
-          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+          <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
     
-          <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+           {{pet.animal._name}} the {{pet.animal._type}} 
+
+          </p>
     
           <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
             <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
             <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
         </div>
     
-        <td>
+      </td>
     
         {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
          {% for index in range(session.get("no_oper_room")) %}
@@ -217,14 +242,11 @@
 
           <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
           
-            <h7> {{no_oper_room}} Empty</h7>
+             {{no_oper_room}} Empty
            
           
           </div>
 
-          
-    
-      
      
        </td>
     
@@ -239,24 +261,28 @@
 <tr >
   <td> Completion </td>
 
-  {% for pet in petTemp %}
+    {% for pet in petTemp %}
 
   <td>
 
     
 
-    <div   draggable="true" ondragstart="drag(event)" id="drag1"  style="margin: 0; padding: 0;"  >
+      <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  style="margin: 0; padding: 0;"  >
 
-      <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="88"   height="50" />
+        <p data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
 
-      <h7> {{pet.animal._name}} the {{pet.animal._type}} </h7>
+        <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
 
-      <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-        <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-        <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
-    </div>
+        {{pet.animal._name}} the {{pet.animal._type}} 
 
-    <td>
+        </p>
+
+        <!-- <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
+          <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
+          <p style="margin: 0; padding: 0;">place: {{pet.place}}</p> --> 
+      </div>
+
+  </td>
 
     {% endfor %}
 
@@ -264,7 +290,7 @@
     <td>
       
       <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-        <h7> {{no_oper_room}} Empty</h7>
+        {{no_oper_room}} Empty
       </div>
  
    </td>
@@ -273,7 +299,7 @@
    <td>
       
     <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-      <h7> {{no_oper_room}} Empty</h7>
+       {{no_oper_room}} Empty
     </div>
 
   </td>
@@ -281,16 +307,14 @@
   <td>
       
     <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-      <h7> {{no_oper_room}} Empty</h7>
+     {{no_oper_room}} Empty
     </div>
 
   </td>
 
   <td>
       
-    <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-      <h7> {{no_oper_room}} Empty</h7>
-    </div>
+    
     
 
    
