@@ -19,18 +19,22 @@
     height:100px;
     
   }
+
+    
+  .datasize {
+    border: 1px solid ;
+    text-align: left;
+    padding: 8px;
+    width:10%;
+ 
+    
+  }
   
   tr:nth-child(even) {
     background-color: #dddddd;
   }
   
-  .datasize{
 
-    width:100%;
-    height: 10px;
-
-
-  }
 
   
   
@@ -65,36 +69,60 @@
     <tr>
 
       <td> Waiting room </td>
-    
 
-    
+
       
-     {% for pet in petWaiting %}
+        {% for pet in petWaiting %}
 
-        <td >
-          
-            <div  draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" >
+        <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> ...
 
-             <p data-toggle="tooltip" title="name: {{pet.animal._name}}
-             type: {{pet.animal._type}}
-             place: {{pet.place}}">
+              <div  draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}">
 
-            <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" />
+                <p data-toggle="tooltip" title="name: {{pet.animal._name}}
+                type: {{pet.animal._type}}
+                place: {{pet.place}}">
 
-            {{pet.animal._name}} the {{pet.animal._type}} 
+                <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" draggable="true" id="dragtarget"/>
 
-             </p>
+                {{pet.animal._name}} the {{pet.animal._type}} 
 
-            </div>
+                </p>
+
+
+              </div>
 
         </td>
 
-     {% endfor %}
+        {% endfor %}
+       
+            
+    <td>
+      
+      <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+       ...
+      </div>
+ 
+   </td>
 
    
+   <td>
+      
+    <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+     ...
+    </div>
 
+  </td>
+
+  <td>
+      
+    <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
+    ...
+    </div>
+
+  </td>
+
+  
    </tr>
-
 
 
  <!--Cages-->
@@ -108,7 +136,7 @@
 
       {% for pet in petCage %}
 
-      <td>
+      <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> ...
 
         <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"    >
 
@@ -138,7 +166,7 @@
       
           <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
           
-            {{no_cage}} Empty
+            {{no_cage}} Empty 
            
           
           </div>
@@ -161,7 +189,7 @@
 
       {% for pet in petOper %}
 
-      <td>
+      <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> ...
 
         
     
@@ -213,7 +241,7 @@
 
       {% for pet in petTemp %}
 
-      <td>
+      <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> ...
 
         
     
@@ -263,7 +291,7 @@
 
     {% for pet in petTemp %}
 
-  <td>
+  <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> ...
 
     
 
@@ -290,7 +318,7 @@
     <td>
       
       <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-        {{no_oper_room}} Empty
+      ... 
       </div>
  
    </td>
@@ -299,7 +327,7 @@
    <td>
       
     <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-       {{no_oper_room}} Empty
+     ...
     </div>
 
   </td>
@@ -307,24 +335,13 @@
   <td>
       
     <div class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%">
-     {{no_oper_room}} Empty
+    ...
     </div>
 
   </td>
 
-  <td>
-      
-    
-    
-
-   
-
-
-  </td>
 
  
-     
-  
 
 </tr>
 
@@ -335,7 +352,10 @@
 
   </table>
 
+  
+
 
 
 
 {%endblock%}
+
