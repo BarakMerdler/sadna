@@ -1,17 +1,31 @@
-{% extends "adminLayout.html" %} {% block title %} Register New Customer {%
-endblock %} {% block content %}
+{% extends 'adminLayout.html' %} {% block head %}  {%endblock %} {% block content %}
+<form action="" method="POST" class="col-lg-4 col-md-4">
+  <div class="form-row">
+    <p>Register New Customer </p>
+      
+      <div class="form-group col-lg-12">
+        <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full Name" data-rule="fullName"
+          data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
 
-<form action="" method="POST">
-  <label for="fname">Full name:</label><br />
-  <input type="text" id="fullName" name="fullName" value="Full Name" /><br />
-  <label for="lname">Email:</label><br />
-  <input type="email" id="email" name="email" value="email@Example.com" />
-  <br />
-  <label for="password">Password:</label><br />
-  <input type="password" id="password" name="password" value="password" />
-  <br /><br />
-  <input type="submit" />
+      <div class="form-group col-lg-12">
+        <input type="email" class="form-control" name="email" id="email" placeholder="email@Example.com"
+          data-rule="custNmae" data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
+
+      <div class="form-group col-lg-12">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" data-rule="password"
+          data-msg="Please enter">
+        <div class="validate"></div>
+      </div>
+  </div>
+    <div class="text-center col-lg-6"> <button type="submit">Submit</button></div>
+  
 </form>
 <h1>{{error}}</h1>
 
+
 {% endblock %}
+
