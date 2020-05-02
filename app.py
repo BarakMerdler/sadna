@@ -16,7 +16,7 @@ app.debug = True
 
 # for session
 app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
-toolbar = DebugToolbarExtension(app)
+#toolbar = DebugToolbarExtension(app)
 
 #! Set the DB connection
 client = MongoClient(
@@ -50,6 +50,16 @@ def findPet(petId):
 
 def findActivePet(vedId):
     return activePet.find({"vet_id": vedId})
+
+
+def removeFromActive(petId):
+    return activePet.delete_one({"pet_id": petId})
+
+
+def updatePetPlace(petId, newPlace):
+    result = activePet.update_one(
+        {"pet_id": int(petId)}, {"$set": {"place": str(newPlace)}})
+    return result.modified_count
 
 
 PATH_TO_TEST_IMAGES_DIR = './images'
@@ -114,7 +124,7 @@ def home():
             petTemp.append(setAnimal)
         if pet['place'] == 'waiting':
             petWaiting.append(setAnimal)
-    return render_template('/home.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
+    return render_template('/api.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
 
 # Route to add pet (new or no)
 @app.route('/addpet', methods=['GET', 'POST'])
@@ -172,7 +182,6 @@ def addNewCustomer():
 def setNewPetTreatment():
     if request.method == 'POST':
         petId = int(request.form['petsId'])
-        print(petId)
         try:
             pets.update_one({"_id": petId}, {
                 "$set": {
@@ -229,7 +238,7 @@ def admin():
         userName = userDetails['fullName']
         userMail = userDetails['email']
         if findUser(userMail):
-            return render_template('/adminLogIn.html', numPage=1, error='Mail is alredy in use')
+            return render_template('/adminLogIn.html',error='Mail is alredy in use')
         userPassword = sha256_crypt.encrypt(userDetails['password'])
         newUser = {
             "email": userMail,
@@ -243,7 +252,7 @@ def admin():
             return redirect(url_for('vetInit', email=userMail))
         except Exception as e:
             print(e)
-    return render_template('/adminLogIn.html', numPage=1)
+    return render_template('/adminLogIn.html')
 
 # Route to set new vent
 @app.route('/admin/vet', methods=['GET', 'POST'])
@@ -273,7 +282,7 @@ def vetInit():
         except Exception as e:
             print(e)
 
-    return render_template('/vetInit.html', numPage=2)
+    return render_template('/vetInit.html')
 
 
 @app.route('/video')
@@ -289,6 +298,52 @@ def image():
     data = decode('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
     os.remove('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
     return Response("%s saved./n data: %s " % (f, data))
+
+# API to remove pet from active care
+@app.route('/removePetFromClink')
+def removePetFromClink():
+    activePetInVet = findActivePet(session['vetId'])
+    animals = []
+    for pet in activePetInVet:
+        tempPet = findPet(pet['pet_id'])
+        tempAnimal = animal(pet['pet_id'], tempPet['name'], tempPet['type'])
+        animals.append(tempAnimal)
+    return render_template('/removePetFromClink.html', animals=animals)
+
+
+@app.route('/deleteFromActive', methods=['POST'])
+def deleteFromActive():
+    petId = request.get_json()
+    try:
+        removeFromActive(petId)
+    except Exception as e:
+        print(e)
+        return redirect(url_for('removePetFromClink'))
+    return redirect(url_for('home'))
+
+# API to update place for pet at the vet
+@app.route('/update')
+def update():
+    animals = []
+    activePetInVet = findActivePet(session['vetId'])
+    for pet in activePetInVet:
+        tempPet = findPet(pet['pet_id'])
+        tempAnimal = animal(pet['pet_id'], tempPet['name'], tempPet['type'])
+        animals.append(activeAnimal(tempAnimal, pet['place']))
+    return render_template('/update.html', animals=animals)
+
+
+@app.route('/updateActivePetPlace', methods=['POST'])
+def updateActivePetPlace():
+    data = request.get_json()
+    petId = data['id']
+    newPlace = data['place']
+    try:
+        x = updatePetPlace(petId, newPlace)
+    except Exception as e:
+        print(e)
+        return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
+    return 'success'
 
 
 if __name__ == '__main__':
