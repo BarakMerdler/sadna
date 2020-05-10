@@ -124,7 +124,7 @@ def home():
             petTemp.append(setAnimal)
         if pet['place'] == 'waiting':
             petWaiting.append(setAnimal)
-    return render_template('/api.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
+    return render_template('/home.html', petCage=petCage, petOper=petOper, petTemp=petTemp, petWaiting=petWaiting)
 
 # Route to add pet (new or no)
 @app.route('/addpet', methods=['GET', 'POST'])
