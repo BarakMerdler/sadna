@@ -238,7 +238,7 @@ def admin():
         userName = userDetails['fullName']
         userMail = userDetails['email']
         if findUser(userMail):
-            return render_template('/adminLogIn.html',error='Mail is alredy in use')
+            return render_template('/adminLogIn.html', error='Mail is alredy in use')
         userPassword = sha256_crypt.encrypt(userDetails['password'])
         newUser = {
             "email": userMail,

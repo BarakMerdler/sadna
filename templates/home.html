@@ -1,338 +1,324 @@
-{% extends 'base.html' %}
-
-{% block head %} 
+{% extends 'base.html' %} {% block head %}
 
 <style>
-
-
   table {
     font-family: arial, sans-serif;
     border: 1px solid #dddddd;
-   
+
     width: 100%;
   }
-  
-  td, th {
+
+  td,
+  th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-    width:10%;
-    height:100px;
-    
+    width: 10%;
+    height: 100px;
   }
 
-    
   .datasize {
-    border: 1px solid ;
+    border: 1px solid;
     text-align: left;
     padding: 8px;
-    width:30 px;
+    width: 30 px;
     height: 30 px;
- 
-    
   }
-  
+
   tr:nth-child(even) {
     background-color: #dddddd;
   }
 
   .card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     width: 40%;
   }
-  
+
   .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
-  
+
   .container {
     padding: 2px 16px;
   }
-  
+</style>
 
+{% endblock %} {% block content %}
 
-  
-  
-  
-  </style>
+<table>
+  <!--Waiting room-->
 
-{% endblock %} 
+  <tr>
+    <td>Waiting room</td>
 
-{% block content %}
+    {% for pet in petWaiting %}
 
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
 
+      <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+        <div
+          data-toggle="tooltip"
+          title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}"
+        >
+          <img
+            src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+            width="30"
+            height="40"
+            draggable="true"
+            ondragstart="drag(event)"
+          />
 
+          {{pet.animal._name}} the {{pet.animal._type}}
+        </div>
+      </div>
+    </td>
 
+    {% endfor %} {%for i in range(0, 5)%}
 
+    <td
+      class="item1"
+      ondrop="drop(event)"
+      ondragover="allowDrop(event)"
+      width="100%"
+    >
+      <!-- להגביל למספר חיות בתא-->
 
+      {{i+1}}
+      <!-- להכניס את מספר התא הפנוי-->
+    </td>
 
+    {%endfor%}
+  </tr>
 
+  <!--Cages-->
 
+  <tr>
+    <td>Cages</td>
 
+    {% for pet in petCage %}
 
-
-    <table>
-    
-
-
-
-    
-    <!--Waiting room-->
-
-
-
-        <tr>
-
-        <td> Waiting room </td>
-
-
-        
-            {% for pet in petWaiting %}
-
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)">  <!-- להגביל למספר חיות בתא-->
-
-             
-
-                <div  draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  >
-                    
-
-                    <div data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
-                        
-                       
-
-                        <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="40" 
-                        draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" />
-
-                        {{pet.animal._name}} the {{pet.animal._type}}
-
-                    
-
-                  
-            
-                    </div>
-       
-
-                </div>
-
-            </td>
-
-            {% endfor %}
-
-            {%for i in range(0, 5)%} 
-            
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%"> <!-- להגביל למספר חיות בתא-->
-            
-               
-               {{i+1}}  <!-- להכניס את מספר התא הפנוי-->
-                
-        
-            </td>
-
-            {%endfor%} 
-        
-             
-
-    
-    </tr>
-
-
-    <!--Cages-->
-
-        <tr>
-
-            <td> Cages </td>
-
-        
-            
-
-            {% for pet in petCage %}
-
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> <!-- להגביל למספר חיות בתא-->
-
-                <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"    >
-
-                <div data-toggle="tooltip" title="name: {{pet.animal._name}}
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+      <div
+        id="cage"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
-                place: {{pet.place}}">
-            
-                <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="40" 
-                draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" />
-            
-                {{pet.animal._name}} the {{pet.animal._type}}
+                place: {{pet.place}}"
+          >
+            <img
+              src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+            />
 
-                </div>
-           
-                </div>
-            
-            </td>
-            
-                {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
-                for index in range(session.get("no_cage")) %}
-            
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%" > <!-- להגביל למספר חיות בתא-->
-
-            {% if variable is defined %} <!-- להכניס: אם תא עם חיה-->
-                
-            {% else %}
-               Empty
-            {% endif %}
-       
-            </td>
-            
-            {% endfor %}
-
-            
-        
-        </tr>
-
-        <!--Operations rooms-->
-
-
-        <tr>
-        <td> Operations rooms </td>
-
-        {% for pet in petOper %}
-
-        <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> <!-- להגביל למספר חיות בתא-->
-
-            
-        
-            <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  style="margin: 0; padding: 0;"  >
-
-            <p data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
-        
-            <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="40" 
-            draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" />
-        
             {{pet.animal._name}} the {{pet.animal._type}}
+          </div>
+        </div>
+      </div>
+    </td>
 
-            </p>
+    {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
+    for index in range(session.get("no_cage")) %}
 
-            </div>
-        
-        </td>
-        
-            {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-            {% for index in range(session.get("no_oper_room")) %}
-        
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%"> <!-- להגביל למספר חיות בתא-->
+    <td
+      class="item1"
+      ondrop="drop(event,this)"
+      ondragover="allowDrop(event)"
+      width="100%"
+      id="cage"
+    >
+      <!-- להגביל למספר חיות בתא-->
 
-                {% if variable is defined %} <!-- להכניס: אם תא עם חיה-->
-                
-                {% else %}
-                   Empty
-                {% endif %}
-           
-    
-          </td>
-        
-        {% endfor %}
+      {% if variable is defined %}
+      <!-- להכניס: אם תא עם חיה-->
 
-        
-    
-        </tr>
+      {% else %} Empty {% endif %}
+    </td>
 
+    {% endfor %}
+  </tr>
 
-    <!--Temp Cages-->
+  <!--Operations rooms-->
 
-        <tr>
-        <td> Temp Cages </td>
+  <tr>
+    <td>Operations rooms</td>
 
-        {% for pet in petTemp %}
+    {% for pet in petOper %}
 
-        <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> <!-- להגביל למספר חיות בתא-->
-            
-        
-            <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  style="margin: 0; padding: 0;"  >
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+      <div
+        id="oper"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                  type: {{pet.animal._type}}
+                  place: {{pet.place}}"
+          >
+            <img
+              src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+            />
 
-            <p data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
-        
-            <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="40" 
-            draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" />
-        
-            {{pet.animal._name}} the {{pet.animal._type}} 
+            {{pet.animal._name}} the {{pet.animal._type}}
+          </div>
+        </div>
+      </div>
+    </td>
 
-            </p>
+    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
+    {% for index in range(session.get("no_oper_room")) %}
 
-            </div>
-        
-        </td>
-        
-            {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-            {% for index in range(session.get("no_oper_room")) %}
-        
-        <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%"> <!-- להגביל למספר חיות בתא-->
+    <td
+      class="item1"
+      ondrop="drop(event,this)"
+      ondragover="allowDrop(event)"
+      width="100%"
+      id="oper"
+    >
+      <!-- להגביל למספר חיות בתא-->
 
-            {% if variable is defined %}  <!-- להכניס: אם תא עם חיה-->
-                
-            {% else %}
-               Empty
-            {% endif %}
-       
- 
-        </td>
-        
-        {% endfor %}
+      {% if variable is defined %}
+      <!-- להכניס: אם תא עם חיה-->
 
-        
-    
-        </tr>
+      {% else %} Empty {% endif %}
+    </td>
 
-    <!--Completion-->
+    {% endfor %}
+  </tr>
 
-        <tr >
-            <td> Completion </td>
+  <!--Temp Cages-->
 
-            {% for pet in petTemp %}
+  <tr>
+    <td>Temp Cages</td>
 
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)"> <!-- להגביל למספר חיות בתא-->
+    {% for pet in petTemp %}
 
-            
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+      <div
+        id="temp"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                    type: {{pet.animal._type}}
+                    place: {{pet.place}}"
+          >
+            <img
+              src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+            />
 
-                <div   draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}"  style="margin: 0; padding: 0;"  >
+            {{pet.animal._name}} the {{pet.animal._type}}
+          </div>
+        </div>
+      </div>
+    </td>
 
-                    <p data-toggle="tooltip" title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}">
+    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
+    {% for index in range(session.get("no_oper_room")) %}
 
-                    <img src="{{ url_for('static',filename='img/animals/tiger.png')}}" width="30"   height="30" 
-                    draggable="true" ondragstart="drag(event)" id="{{pet.animal._name}}" />
+    <td
+      class="temp"
+      ondrop="drop(event,this)"
+      ondragover="allowDrop(event)"
+      width="100%"
+      id="temp"
+    >
+      <!-- להגביל למספר חיות בתא-->
 
-                    {{pet.animal._name}} the {{pet.animal._type}} 
+      {% if variable is defined %}
+      <!-- להכניס: אם תא עם חיה-->
 
-                    </p>
+      {% else %} Empty {% endif %}
+    </td>
 
-                </div>
+    {% endfor %}
+  </tr>
 
-            </td>
+  <!--Completion-->
 
-            {% endfor %}
+  <tr>
+    <td>Completion</td>
 
-            
-            
-            {%for i in range(0, 5)%} 
-            
-            <td class="item1"  ondrop="drop(event)" ondragover="allowDrop(event)" width="100%"> <!-- להגביל למספר חיות בתא-->
-            
-              
-                    {{i+1}} <!-- להכניס את מספר התא הפנוי-->
+    {%for i in range(0, 5)%}
 
-            </td>
+    <td
+      class="item1"
+      ondrop="drop(event, this)"
+      ondragover="allowDrop(event)"
+      width="100%"
+      id="kill"
+    >
+      <!-- להגביל למספר חיות בתא-->
 
-            {%endfor%} 
+      {{i+1}}
+      <!-- להכניס את מספר התא הפנוי-->
 
+      {%endfor%}
+    </td>
+  </tr>
+</table>
 
-        
+{%endblock%} {% block script %}
+<script>
+  function updateTreatment(id, newPlace) {
+    console.log(id);
+    const val = newPlace;
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('updateActivePetPlace')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify({ id: id, place: val }),
+      success: function (result) {
+        console.log("success");
+      },
+      error: function (data) {
+        console.log(data);
+      },
+    });
+  }
 
-        </tr>
-
-
-
-
-    </table>
-
-
-
-
-
-{%endblock%}
-
+  function removeFromClink(id) {
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('deleteFromActive')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: id,
+      success: function (data) {
+        window.location.href = "{{url_for('home')}}";
+      },
+      error: function (data) {
+        alert("Somthing went wrong please contact us");
+      },
+    });
+  }
+</script>
+{% endblock %}
