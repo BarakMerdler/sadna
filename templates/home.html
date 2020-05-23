@@ -1,152 +1,532 @@
-{% extends 'base.html' %} {% block head %} {% endblock %}
 
- {% block content %}
-<section id="team">
-  <h2>Drag and Drop</h2>
+{% extends 'base.html' %} {% block head %}
 
-  <p>Drag the image back and forth between the columns</p>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border: 1px solid #dddddd;
 
-  <div id="div4">
-    <!-- תמונות גינריות של חיות שצריכות לקבל id  -->
+    width: 100%;
+  }
 
-    <!--    <img
-      src="assets/img/animals/cow.png"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag1"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/tiger.png"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag2"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/giraffe.png"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag3"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/lion.jpg"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag4"
-      width="88"
-      height="50"
-    />
-    <img
-      src="assets/img/animals/pinguin.jpg"
-      draggable="true"
-      ondragstart="drag(event)"
-      id="drag5"
-      width="88"
-      height="50"
-    />
--->
-    <div><h7>Waiting Room</h7></div>
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width: 10%;
+    height: 100px;
+  }
+
+  .datasize {
+    border: 1px solid;
+    text-align: left;
+    padding: 8px;
+    width: 30 px;
+    height: 30 px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 40%;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .container {
+    padding: 2px 16px;
+  }
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+{% endblock %} {% block content %}
+<table>
+  <!--Waiting room-->
+
+  <tr>
+    <td>Waiting room</td>
+
     {% for pet in petWaiting %}
-    <div
-      id=""
+
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+
+      <div
+        id="waiting"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
+          >
+            {% set imgsrc = get_pic(pet.animal._type) %}
+            <img
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }} )"
+            >
+              Add Treatment Log
+            </button>
+          </div>
+        </div>
+      </div>
+    </td>
+
+    {% endfor %} {%for i in range(0, 5)%}
+
+    <td
+      class="item1"
       ondrop="drop(event)"
       ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
+      width="100%"
     >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
-    </div>
-    {% endfor %}
-  </div>
+      <!-- להגביל למספר חיות בתא-->
 
+      {{i+1}}
+      <!-- להכניס את מספר התא הפנוי-->
+    </td>
 
+    {%endfor%}
+  </tr>
 
+  <!--Cages-->
 
+  <tr>
+    <td>Cages</td>
 
-  <div id="div2">
-    <div><h7>Available Cabins</h7></div>
     {% for pet in petCage %}
-    <div
-      id=""
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
-    >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
-    </div>
+
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+      <div
+        id="cage"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
+          >
+            {% set imgsrc = get_pic(pet.animal._type) %}
+            <img
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
+            >
+              Add Treatment Log
+            </button>
+          </div>
+        </div>
+      </div>
+    </td>
+
     {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
     for index in range(session.get("no_cage")) %}
-    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
-      Empty
 
-  <div id="div2">
-    <div><h7>Available treatment's rooms</h7></div>
-    {% for pet in petOper %}
-    <div
-      id=""
-      ondrop="drop(event)"
+    <td
+      class="item1"
+      ondrop="drop(event,this)"
       ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
+      width="100%"
+      id="cage"
     >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
-    </div>
+      <!-- להגביל למספר חיות בתא-->
+
+      {% if variable is defined %}
+      <!-- להכניס: אם תא עם חיה-->
+
+      {% else %} Empty {% endif %}
+    </td>
+
+    {% endfor %}
+  </tr>
+
+  <!--Operations rooms-->
+
+  <tr>
+    <td>Operations rooms</td>
+
+    {% for pet in petOper %}
+
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+      <div
+        id="oper"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
+          >
+            {% set imgsrc = get_pic(pet.animal._type) %}
+            <img
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
+            >
+              Add Treatment Log
+            </button>
+          </div>
+        </div>
+      </div>
+    </td>
+
     {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
     {% for index in range(session.get("no_oper_room")) %}
-    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
-      Empty
 
-
-    </div>
-    
-  </div>
-
-  <div><h7>Temp Cages</h7></div>
-  <div id="div2" style="display: flex; flex-direction: column; margin: auto;">
-    {% for pet in petTemp %}
-    <div
-      id=""
-      ondrop="drop(event)"
+    <td
+      class="item1"
+      ondrop="drop(event,this)"
       ondragover="allowDrop(event)"
-      style="margin: 0; padding: 0;"
+      width="100%"
+      id="oper"
     >
-      <p style="margin: 0; padding: 0;">name: {{pet.animal._name}}</p>
-      <p style="margin: 0; padding: 0;">type: {{pet.animal._type}}</p>
-      <p style="margin: 0; padding: 0;">place: {{pet.place}}</p>
-    </div>
+      <!-- להגביל למספר חיות בתא-->
+
+      {% if variable is defined %}
+      <!-- להכניס: אם תא עם חיה-->
+
+      {% else %} Empty {% endif %}
+    </td>
+
     {% endfor %}
+  </tr>
+
+  <!--Temp Cages-->
+
+  <tr>
+    <td>Temp Cages</td>
+
+    {% for pet in petTemp %}
+
+    <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- להגביל למספר חיות בתא-->
+      <div
+        id="temp"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
+          >
+            {% set imgsrc = get_pic(pet.animal._type) %}
+            <img
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
+            >
+              Add Treatment Log
+            </button>
+          </div>
+        </div>
+      </div>
+    </td>
+
+    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
+    {% for index in range(session.get("no_oper_room")) %}
+
+    <td
+      class="temp"
+      ondrop="drop(event,this)"
+      ondragover="allowDrop(event)"
+      width="100%"
+      id="temp"
+    >
+      <!-- להגביל למספר חיות בתא-->
+
+      {% if variable is defined %}
+      <!-- להכניס: אם תא עם חיה-->
+
+      {% else %} Empty {% endif %}
+    </td>
+
+    {% endfor %}
+  </tr>
+
+  <!--Completion-->
+
+  <tr>
+    <td>Completion</td>
+
+    {%for i in range(0, 5)%}
 
 
+    <td
+      class="item1"
+      ondrop="drop(event, this)"
+      ondragover="allowDrop(event)"
+      width="100%"
+      id="kill"
+    >
+      <!-- להגביל למספר חיות בתא-->
 
-    <div id="div2">
-      <div><h7>Completion</h7></div>
+      {{i+1}}
+      <!-- להכניס את מספר התא הפנוי-->
 
+      {%endfor%}
+    </td>
+  </tr>
+</table>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <label for="fname">Add Treatment Documentation:</label>
+    <input
+      type="text"
+      id="treatmentDocumentation"
+      name="treatmentDocumentation"
+    /><br /><br />
+    <label for="fname">Add Drugs Documentation:</label>
+    <input
+      type="text"
+      id="drugsDocumentation"
+      name="drugsDocumentation"
+    /><br /><br />
+    <button onclick="addtreatment(this)">Update</button>
+  </div>
+</div>
+{%endblock%} {% block script %}
+<script>
+  function updateTreatment(id, newPlace) {
+    const val = newPlace;
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('updateActivePetPlace')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify({ id: id, place: val }),
+      success: function (result) {
+        console.log("success");
+      },
+      error: function (data) {
+        console.log(data);
+      },
+    });
+  }
 
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">1</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">2</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">3</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">4</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">5</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">6</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">7</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">8</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">9</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">10</div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">11</div>
-    </div>
-  </section>
+  function removeFromClink(id) {
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('deleteFromActive')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: id,
+      success: function (data) {
+        window.location.href = "{{url_for('home')}}";
+      },
+      error: function (data) {
+        alert("Somthing went wrong please contact us");
+      },
+    });
+  }
 
-  {% endblock %}
-      <!--
-  {% block api %} {% endblock %}
--->
+  function addTretmentLog(id) {
+    // Get the modal
+    const modal = document.getElementById("myModal");
 
+    //delete the previos documtions
+    document.getElementById("treatmentDocumentation").value = "";
+    document.getElementById("drugsDocumentation").value = "";
+
+    //add the name of the pet
+    const node = document.createElement("h3");
+    const textnode = document.createTextNode(
+      `Add documtions to ${event.target.name} treatment`
+    );
+    node.appendChild(textnode);
+    const modalContent = document.getElementsByClassName("modal-content")[0];
+
+    modalContent.insertBefore(node, modalContent.childNodes[1]);
+
+    //add the id of pet to the div
+    const nodeIdPet = document.createElement("INPUT");
+    nodeIdPet.setAttribute("type", "text");
+    nodeIdPet.setAttribute("value", `${id}`);
+    nodeIdPet.setAttribute("id", "petIdMedicalTretment");
+    modalContent.appendChild(nodeIdPet);
+    nodeIdPet.style.display = "none";
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    //Adding the id of pet to the form
+
+    // When the user clicks the button, open the modal
+
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+      modalContent.removeChild(modalContent.childNodes[1]);
+      nodeIdPet.remove();
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+        modalContent.removeChild(modalContent.childNodes[1]);
+        nodeIdPet.remove();
+      }
+    };
+  }
+
+  function addtreatment(id) {
+    const newTreatment = document.getElementById("treatmentDocumentation")
+      .value;
+    const newDrug = document.getElementById("drugsDocumentation").value;
+    const petId = parseInt(
+      document.getElementById("petIdMedicalTretment").value
+    );
+    const modal = document.getElementById("myModal");
+
+    console.log(newTreatment);
+    console.log(newDrug);
+    console.log(petId);
+
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('addTreatmentToPet')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify({
+        id: petId,
+        newTreatment: newTreatment,
+        newDrug: newDrug,
+      }),
+      success: function (result) {
+        modal.style.display = "none";
+      },
+      error: function (data) {
+        console.log(data);
+      },
+    });
+  }
+</script>
+{% endblock %}

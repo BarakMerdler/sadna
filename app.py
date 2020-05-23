@@ -28,6 +28,7 @@ vet = db['veterinarys']
 customers = db['customers']
 activePet = db['activePet']
 pets = db['pets']
+medicalhistory = db['medicalhistory']
 
 #! DB functions get/set
 
@@ -153,6 +154,7 @@ def addNewCustomer():
                 "name": petsNames[i],
                 "type": petsTypes[i],
                 "active": False,
+                "medicalHistoryId": [],
                 "date_created": datetime.utcnow()
             }
             try:
@@ -182,6 +184,7 @@ def addNewCustomer():
 def setNewPetTreatment():
     if request.method == 'POST':
         petId = int(request.form['petsId'])
+        medicalId = medicalhistory.count_documents({}) + 1
         try:
             pets.update_one({"_id": petId}, {
                 "$set": {
@@ -195,9 +198,28 @@ def setNewPetTreatment():
                 "pet_id": petId,
                 "vet_id": session['vetId'],
                 "place": "waiting",
+                "currentMedicalId": medicalId,
                 "startDate": datetime.utcnow()
             }
             activePet.insert_one(newActivePet)
+        except Exception as e:
+            print(e)
+        try:
+            newMedical = {
+                "_id": medicalId,
+                "vet_id": session['vetId'],
+                "pet_id": petId,
+                "startDate": datetime.utcnow()
+            }
+            medicalhistory.insert_one(newMedical)
+        except Exception as e:
+            print(e)
+        try:
+            pets.update_one({"_id": petId}, {
+                "$push": {
+                    "medicalHistoryId": medicalId
+                }
+            })
         except Exception as e:
             print(e)
         return redirect(url_for('home'))
@@ -238,7 +260,7 @@ def admin():
         userName = userDetails['fullName']
         userMail = userDetails['email']
         if findUser(userMail):
-            return render_template('/adminLogIn.html',error='Mail is alredy in use')
+            return render_template('/adminLogIn.html', error='Mail is alredy in use')
         userPassword = sha256_crypt.encrypt(userDetails['password'])
         newUser = {
             "email": userMail,
@@ -348,6 +370,41 @@ def updateActivePetPlace():
 @app.route('/api', methods=['GET', 'POST'])
 def api():
      return render_template('/api.html')
+
+
+@app.route('/addTreatmentToPet', methods=['POST'])
+def addTreatmentToPet():
+    data = request.get_json()
+    petId = data['id']
+    newTreatment = data['newTreatment']
+    newDrug = data['newDrug']
+    activePets = activePet.find_one({"pet_id": petId})
+    medicalId = activePets['currentMedicalId']
+    try:
+        medicalhistory.update_one({"_id": medicalId}, {
+            "$push": {
+                "treatments": newTreatment,
+                "drugs": newDrug,
+                "time": datetime.utcnow()
+            }
+        })
+    except Exception as e:
+        print(e)
+        return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
+    return 'success'
+
+
+@app.context_processor
+def utility_processor():
+    def get_pic(animal):
+        return{
+            'cow': "cow.png",
+            'giraffe': "giraffe.png",
+            'lion': "lion.jpg",
+            'pinguin': "pinguin.jpg",
+            'tiger': "tiger.png"
+        }.get(animal, 'tiger.png')
+    return dict(get_pic=get_pic)
 
 
 if __name__ == '__main__':
