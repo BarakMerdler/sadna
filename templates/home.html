@@ -42,10 +42,47 @@
   .container {
     padding: 2px 16px;
   }
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
 
 {% endblock %} {% block content %}
-
 <table>
   <!--Waiting room-->
 
@@ -57,20 +94,44 @@
     <td class="item1" ondrop="drop(event)" ondragover="allowDrop(event)">
       <!-- להגביל למספר חיות בתא-->
 
-      <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
-        <div
-          data-toggle="tooltip"
-          title="name: {{pet.animal._name}} type: {{pet.animal._type}} place: {{pet.place}}"
-        >
-          <img
-            src="{{ url_for('static',filename='img/animals/tiger.png')}}"
-            width="30"
-            height="40"
-            draggable="true"
-            ondragstart="drag(event)"
-          />
-
-          {{pet.animal._name}} the {{pet.animal._type}}
+      <div
+        id="waiting"
+        ondrop="drop(event,this)"
+        ondragover="allowDrop(event)"
+        style="height: 100%;"
+      >
+        <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
+          <div
+            data-toggle="tooltip"
+            title="name: {{pet.animal._name}}
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
+          >
+            {% set imgsrc = get_pic(pet.animal._type) %}
+            <img
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
+              width="30"
+              height="40"
+              draggable="true"
+              ondragstart="drag(event)"
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }} )"
+            >
+              Add Treatment Log
+            </button>
+          </div>
         </div>
       </div>
     </td>
@@ -113,16 +174,31 @@
             title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
+            style="padding: 2px 0px;"
           >
+            {% set imgsrc = get_pic(pet.animal._type) %}
             <img
-              src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
               width="30"
               height="40"
               draggable="true"
               ondragstart="drag(event)"
-            />
-
-            {{pet.animal._name}} the {{pet.animal._type}}
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
+            >
+              Add Treatment Log
+            </button>
           </div>
         </div>
       </div>
@@ -168,18 +244,33 @@
           <div
             data-toggle="tooltip"
             title="name: {{pet.animal._name}}
-                  type: {{pet.animal._type}}
-                  place: {{pet.place}}"
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
           >
+            {% set imgsrc = get_pic(pet.animal._type) %}
             <img
-              src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
               width="30"
               height="40"
               draggable="true"
               ondragstart="drag(event)"
-            />
-
-            {{pet.animal._name}} the {{pet.animal._type}}
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
+            >
+              Add Treatment Log
+            </button>
           </div>
         </div>
       </div>
@@ -225,18 +316,33 @@
           <div
             data-toggle="tooltip"
             title="name: {{pet.animal._name}}
-                    type: {{pet.animal._type}}
-                    place: {{pet.place}}"
+                type: {{pet.animal._type}}
+                place: {{pet.place}}"
+            style="padding: 2px 0px;"
           >
+            {% set imgsrc = get_pic(pet.animal._type) %}
             <img
-              src="{{ url_for('static',filename='img/animals/tiger.png')}}"
+              src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
               width="30"
               height="40"
               draggable="true"
               ondragstart="drag(event)"
-            />
-
-            {{pet.animal._name}} the {{pet.animal._type}}
+              style="
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+              "
+            /><br />
+            <p style="text-align: center;">
+              {{pet.animal._name}} the {{pet.animal._type}}
+            </p>
+            <br />
+            <button
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
+            >
+              Add Treatment Log
+            </button>
           </div>
         </div>
       </div>
@@ -286,11 +392,29 @@
     </td>
   </tr>
 </table>
-
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <label for="fname">Add Treatment Documentation:</label>
+    <input
+      type="text"
+      id="treatmentDocumentation"
+      name="treatmentDocumentation"
+    /><br /><br />
+    <label for="fname">Add Drugs Documentation:</label>
+    <input
+      type="text"
+      id="drugsDocumentation"
+      name="drugsDocumentation"
+    /><br /><br />
+    <button onclick="addtreatment(this)">Update</button>
+  </div>
+</div>
 {%endblock%} {% block script %}
 <script>
   function updateTreatment(id, newPlace) {
-    console.log(id);
     const val = newPlace;
     $.ajax({
       type: "POST",
@@ -317,6 +441,88 @@
       },
       error: function (data) {
         alert("Somthing went wrong please contact us");
+      },
+    });
+  }
+
+  function addTretmentLog(id) {
+    // Get the modal
+    const modal = document.getElementById("myModal");
+
+    //delete the previos documtions
+    document.getElementById("treatmentDocumentation").value = "";
+    document.getElementById("drugsDocumentation").value = "";
+
+    //add the name of the pet
+    const node = document.createElement("h3");
+    const textnode = document.createTextNode(
+      `Add documtions to ${event.target.name} treatment`
+    );
+    node.appendChild(textnode);
+    const modalContent = document.getElementsByClassName("modal-content")[0];
+
+    modalContent.insertBefore(node, modalContent.childNodes[1]);
+
+    //add the id of pet to the div
+    const nodeIdPet = document.createElement("INPUT");
+    nodeIdPet.setAttribute("type", "text");
+    nodeIdPet.setAttribute("value", `${id}`);
+    nodeIdPet.setAttribute("id", "petIdMedicalTretment");
+    modalContent.appendChild(nodeIdPet);
+    nodeIdPet.style.display = "none";
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    //Adding the id of pet to the form
+
+    // When the user clicks the button, open the modal
+
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+      modalContent.removeChild(modalContent.childNodes[1]);
+      nodeIdPet.remove();
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+        modalContent.removeChild(modalContent.childNodes[1]);
+        nodeIdPet.remove();
+      }
+    };
+  }
+
+  function addtreatment(id) {
+    const newTreatment = document.getElementById("treatmentDocumentation")
+      .value;
+    const newDrug = document.getElementById("drugsDocumentation").value;
+    const petId = parseInt(
+      document.getElementById("petIdMedicalTretment").value
+    );
+    const modal = document.getElementById("myModal");
+
+    console.log(newTreatment);
+    console.log(newDrug);
+    console.log(petId);
+
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('addTreatmentToPet')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify({
+        id: petId,
+        newTreatment: newTreatment,
+        newDrug: newDrug,
+      }),
+      success: function (result) {
+        modal.style.display = "none";
+      },
+      error: function (data) {
+        console.log(data);
       },
     });
   }
