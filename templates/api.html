@@ -1,8 +1,7 @@
-{% extends 'home.html' %} {% block head %}
+{% extends 'base.html' %} {% block head %}
 <style>
   body {
-    background: #20262e;
-    padding: 20px;
+    
     font-family: Helvetica;
   }
 
@@ -34,12 +33,12 @@
     width: 460px;
   }
 </style>
-{% endblock %} {{super()}} {% block api %}
+{% endblock %}  {% block content %}
 
-<div id="banner-message">
+<div id="banner-message" style="min-height: 55vh">
   <p>Select a Breed</p>
 
-  <input id="breed_search" />
+  <input id="breed_search" placeholder="Free search" />
 
   <select class="breed_select">
     <option></option>

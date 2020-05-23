@@ -367,6 +367,10 @@ def updateActivePetPlace():
         return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
     return 'success'
 
+@app.route('/api', methods=['GET', 'POST'])
+def api():
+     return render_template('/api.html')
+
 
 @app.route('/addTreatmentToPet', methods=['POST'])
 def addTreatmentToPet():
