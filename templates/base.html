@@ -48,7 +48,17 @@
       href="{{ url_for('static',filename='css/style.css') }}"
       rel="stylesheet"
     />
-
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <style>
+      .dropdown:hover > .dropdown-menu,
+      .dropdown-menu:hover {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
     {% block head %} {% endblock %}
   </head>
 
@@ -65,10 +75,53 @@
             <li class="menu-active">
               <a href="{{ url_for('home') }}">Home</a>
             </li>
-            <li><a href="#">Main Table</a></li>
+            <li>
+              <a href="{{ url_for('searchpettotreatment') }}">Treatment Log</a>
+            </li>
             <li><a href="{{ url_for('addpet') }}">Add Pet</a></li>
-            <li><a href="#">Rooms editing</a></li>
-            <li><a href="{{ url_for('api') }}">Search</a></li>
+            <li>
+              <a href="{{ url_for('api') }}">Search Breeds</a>
+            </li>
+            <li>
+              <a href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+            {% if session.get("admin") %}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="material-icons">settings</i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a
+                  class="dropdown-item"
+                  style="
+                    color: #16181b;
+                    text-decoration: none;
+                    background-color: #f8f9fa;
+                  "
+                  href="{{ url_for('vetAdmin') }}"
+                  >Update Facilty</a
+                >
+                <a
+                  class="dropdown-item"
+                  style="
+                    color: #16181b;
+                    text-decoration: none;
+                    background-color: #f8f9fa;
+                  "
+                  href="{{ url_for('AdminAddUser') }}"
+                  >Add Doctor to the Veterinary</a
+                >
+              </div>
+            </li>
+            {% endif %}
           </ul>
         </nav>
         <!-- #nav-menu-container -->

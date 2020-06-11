@@ -1,128 +1,89 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {%block head%}
+<style>
+  .collapsible {
+    background-color: #777 !important;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
 
-{%block head%} {%endblock%}
+  .active,
+  .collapsible:hover {
+    background-color: #555;
+  }
 
+  .collapsible:after {
+    content: "\002B";
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
 
+  .active:after {
+    content: "\2212";
+  }
 
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+    width: 100%;
+  }
+</style>
+{%endblock%} {% block content %}
+<h3>Treatment Log</h3>
+{% for treat in med %}
+<div class="collapsible">
+  From {{treat['startDate'].strftime('%d/%m/%Y at %H:%M:%S')}} to {%
+  if(treat['endDate']) %} {{treat['endDate'].strftime('%d/%m/%Y at %H:%M:%S')}}
+  {% else %} Current Time {%endif%}
+</div>
+<div class="content">
+  <p style="margin: auto; padding: 20px;">
+    {{treat['discharge_note']}}
+  </p>
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Time</th>
+        <th scope="col">Treatment</th>
+        <th scope="col">Drugs</th>
+      </tr>
+    </thead>
+    {% if (treat['time']) %} {% for i in range(0,treat['drugs']|length) %}
+    <tr>
+      <th scope="row">{{treat['time'][i].strftime('%d/%m/%Y at %H:%M:%S')}}</th>
+      <td>{{treat['treatments'][i]}}</td>
+      <td>{{treat['drugs'][i]}}</td>
+    </tr>
+    {% endfor %} {% else %}
+    <h2>No Treatments wrote in this appoitment</h2>
+    {% endif %}
+  </table>
+</div>
+{% endfor %} {%endblock%} {% block script %}
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
 
-  {%block body%}
-
-
-  
-  <div class="row" id="myDIV">
-
-    <div class="col-lg-10 content wow fadeInRight">
-
-         <p> <h3> Treatment Log</h3></p>
-
-         <section id="contact">
-            <div class="container">
-              <div class="row wow fadeInUp">
-      
-                <div class="col-lg-6 col-md-4">
-                  <div class="contact-about">
-                    <h3>Search a pet</h3>
-      
-                    <div class="search-container">
-                      <form action="">
-                        <input type="text" placeholder="Search..." name="search" id="searchPet">
-                        <button class="searchbutton"  onclick="viewSearch()" type="submit"><i  class="fa fa-search" ></i></button>
-                      </form>
-                    </div>
-
-                    <div ><button type="button" onclick="addDiagnosis()">Add a diagnosis</button>
-              
-                        <div id="diagnosisText">
-                    
-                          <form action="" method="post" role="form" class="php-email-form">
-                    
-                            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" ></textarea>
-                    
-                              <div class="validate"></div>
-                    
-                               <div class="mb-3">
-                                 <div class="loading">Loading</div>
-                                  <div class="error-message"></div>
-                                 <div class="sent-message">Your message has been sent. Thank you!</div>
-                               </div>
-                    
-                          <div class="text-center"><button type="submit" title="Send Message">Add to treatment log</button></div>
-                    
-                        </form>
-
-             <table class="table table-hover table-dark">
-                     <thead>
-                       <tr>
-                         <th scope="col">#</th>
-                         <th scope="col">Pet ID</th>
-                         <th scope="col">Vet ID</th>
-                         <th scope="col">Start date</th>
-                         <th scope="col">End date</th>
-                         <th scope="col">Diagnosis</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                       <tr>
-                         <th scope="row">1</th>
-                         <td>Mark</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                         <td>Otto</td>
-                         <td>@mdo</td>
-                       </tr>
-                      
-                     </tbody>
-             </table>
-    </div>
-
- </div>
-
-  {%endblock%}
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  }
+</script>
+{% endblock %}

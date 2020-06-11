@@ -1,74 +1,142 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block head %} {% endblock %} {%block content%}
 
-{% block head %} {% endblock %}
-
-
-
-
-  {%block content%}
-  
-  <section id="features">
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-lg-8 offset-lg-4">
-          <div class="section-header wow fadeIn" data-wow-duration="1s">
-            <h3 class="section-title">Rooms editing</h3>
-            <span class="section-divider"></span>
-          </div>
+<section id="features">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-4">
+        <div class="section-header wow fadeIn" data-wow-duration="1s">
+          <h3 class="section-title">Rooms editing</h3>
+          <span class="section-divider"></span>
         </div>
-
-        <div class="col-lg-4 col-md-5 features-img">
-          <img src="assets/img/product-features.png" alt="" class="wow fadeInLeft">
-        </div>
-
-        <div class="col-lg-8 col-md-7 ">
-
-          <div class="row">
-
-<!-- ======= כפתורי פלוס ומינוס- כאשר לוחצים נוסף\נמחק תא  ======= -->
-
-            <div class="col-lg-6 col-md-6 box wow fadeInRight">
-              <h4 class="title">Add a cabin</h4>
-
-                <button type="button" class="iconH" ><i class="ion-ios-plus-outline"></i></button>
-
-              <p class="description"></p>
-            </div>
-
-            <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.1s">
-              <h4 class="title">Delete a cabin</h4>
-
-                <button type="button" class="iconH"><i class="ion-ios-minus-outline"></i></button>
-
-              <p class="description"></p>
-            </div>
-
-            <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.2s">
-              <h4 class="title">Add a Treatment room</h4>
-
-               <button type="button" class="iconH"><i class="ion-ios-plus-outline"></i></button>
-
-              <p class="description"></p>
-            </div>
-
-            <div class="col-lg-6 col-md-6 box wow fadeInRight" data-wow-delay="0.3s">
-              <h4 class="title">Delete a Treatment room</h4>
-
-               <button type="button" class="iconH"><i class="ion-ios-minus-outline"></i></button>
-
-              <p class="description"> </p>
-            </div>
-
-          </div>
-
-        </div>
-
       </div>
 
-    </div>
+      <div class="col-lg-4 col-md-5 features-img">
+        <img
+          src="assets/img/product-features.png"
+          alt=""
+          class="wow fadeInLeft"
+        />
+      </div>
 
-  </section>
-  
-  {%endblock%}
+      <div class="col-lg-8 col-md-7">
+        <div class="row">
+          <!-- ======= כפתורי פלוס ומינוס- כאשר לוחצים נוסף\נמחק תא  ======= -->
+
+          <div class="col-lg-5 col-md-5 box wow fadeInRight">
+            <h4 class="title">Add a cabin</h4>
+
+            <button type="button" class="iconH" onclick="update('no_cage',1)">
+              <i class="ion-ios-plus-outline"></i>
+            </button>
+
+            <p class="description"></p>
+          </div>
+          <div
+            class="col-lg-2 col-md-2 box wow fadeInRight"
+            style="
+              text-align: center;
+              vertical-align: center;
+              line-height: 100%;
+            "
+          >
+            <h1
+              id="h1-no_cage"
+              style="position: relative; top: 50%; transform: translateY(-50%);"
+            >
+              {{session.get("no_cage")}}
+            </h1>
+          </div>
+          <div
+            class="col-lg-5 col-md-5 box wow fadeInRight"
+            data-wow-delay="0.1s"
+          >
+            <h4 class="title">Delete a cabin</h4>
+
+            <button type="button" class="iconH" onclick="update('no_cage',-1)">
+              <i class="ion-ios-minus-outline"></i>
+            </button>
+
+            <p class="description"></p>
+          </div>
+
+          <div
+            class="col-lg-5 col-md-5 box wow fadeInRight"
+            data-wow-delay="0.2s"
+          >
+            <h4 class="title">Add a Treatment room</h4>
+
+            <button
+              type="button"
+              class="iconH"
+              onclick="update('no_oper_room' , 1)"
+            >
+              <i class="ion-ios-plus-outline"></i>
+            </button>
+
+            <p class="description"></p>
+          </div>
+          <div
+            class="col-lg-2 col-md-2 box wow fadeInRight"
+            style="
+              text-align: center;
+              vertical-align: center;
+              line-height: 100%;
+            "
+          >
+            <h1
+              id="h1-no_oper_room"
+              style="position: relative; top: 50%; transform: translateY(-50%);"
+            >
+              {{session.get("no_oper_room")}}
+            </h1>
+          </div>
+          <div
+            class="col-lg-5 col-md-5 box wow fadeInRight"
+            data-wow-delay="0.3s"
+          >
+            <h4 class="title">Delete a Treatment room</h4>
+
+            <button
+              type="button"
+              class="iconH"
+              onclick="update('no_oper_room' , -1)"
+            >
+              <i class="ion-ios-minus-outline"></i>
+            </button>
+
+            <p class="description"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%endblock%} {% block script %}
+<script>
+  function update(data, by) {
+    const entry = {
+      by: by,
+      place: data,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('updateFacilty')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify(entry),
+      success: function (data) {
+        const res = JSON.parse(data);
+        let text = document.getElementById(`h1-${res.place}`).textContent;
+        let num = parseInt(text, 10);
+        num += by;
+        document.getElementById(`h1-${res.place}`).innerHTML = num.toString();
+      },
+      error: function (data) {
+        alert("Somthing went wrong please contact us");
+        console.log(data);
+      },
+    });
+  }
+</script>
+{%endblock%}

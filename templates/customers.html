@@ -6,6 +6,12 @@
   class="col-lg-8 col-md-4"
   style="min-height: 55vh;"
 >
+  <div class="row">
+    {% if (error) %}
+    <br />
+    <h1 style="color: red;">Email wasn't find</h1>
+    {% endif %}
+  </div>
   <div class="form-row">
     <p>Enter email to search</p>
   </div>

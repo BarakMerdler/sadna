@@ -1,31 +1,99 @@
-{% extends 'adminLayout.html' %} {% block head %}  {%endblock %} {% block content %}
+{% extends 'base.html' %} {% block head %} {%endblock %} {% block content %}
 <form action="" method="POST" class="col-lg-4 col-md-4">
   <div class="form-row">
-    <p>Register New Customer </p>
-      
-      <div class="form-group col-lg-12">
-        <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full Name" data-rule="fullName"
-          data-msg="Please enter">
-        <div class="validate"></div>
-      </div>
+    <p>Register New Customer</p>
 
-      <div class="form-group col-lg-12">
-        <input type="email" class="form-control" name="email" id="email" placeholder="email@Example.com"
-          data-rule="custNmae" data-msg="Please enter">
-        <div class="validate"></div>
-      </div>
+    <div class="form-group col-lg-12">
+      <input
+        type="text"
+        class="form-control"
+        name="fullName"
+        id="fullName"
+        placeholder="Full Name"
+        data-rule="fullName"
+        data-msg="Please enter"
+      />
+      <div class="validate"></div>
+    </div>
 
-      <div class="form-group col-lg-12">
-        <input type="password" class="form-control" name="password" id="password" placeholder="Password" data-rule="password"
-          data-msg="Please enter">
-        <div class="validate"></div>
-      </div>
+    <div class="form-group col-lg-12">
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        id="email"
+        placeholder="email@Example.com"
+        data-rule="custNmae"
+        data-msg="Please enter"
+      />
+      <div class="validate"></div>
+    </div>
+
+    <div class="form-group col-lg-12">
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        id="password"
+        placeholder="Password"
+        data-rule="password"
+        data-msg="Please enter"
+      />
+      <div class="validate"></div>
+    </div>
+    {% if oldUser %}
+    <div class="form-group col-lg-12" style="display: flex;">
+      <label for="myCheck">Admin:</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        name="myCheck"
+        id="myCheck"
+        data-msg="Please enter"
+        data-rule="admin"
+      />
+
+      <div class="validate"></div>
+    </div>
+    {% endif %}
   </div>
-    <div class="text-center col-lg-6"> <button type="submit">Submit</button></div>
-  
+  <div class="text-center col-lg-6">
+    <button {% if oldUser %} onclick="addUser(event)" {% endif %}>
+      Submit
+    </button>
+  </div>
 </form>
 <h1>{{error}}</h1>
 
+{% endblock %}{% block script %}
+<script>
+  function addUser(e) {
+    e.preventDefault();
+    const name = document.getElementById("fullName").value;
+    const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+    const admin = document.getElementById("myCheck").checked;
+    console.log(name, password, email, admin);
+    const entry = {
+      name: name,
+      password: password,
+      email: email,
+      admin: admin,
+    };
 
-{% endblock %}
-
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('AdminAddUser')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify(entry),
+      success: function (data) {
+        window.location.href = "{{url_for('home')}}";
+      },
+      error: function (data) {
+        alert("Please check the email again");
+        console.log(data);
+      },
+    });
+  }
+</script>
+{%endblock%}

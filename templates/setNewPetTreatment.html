@@ -1,17 +1,162 @@
-{% extends 'base.html' %} {% block head %} {% endblock %} {% block content %}
-<form action="" method="POST" class="col-lg-4 col-md-4" style="min-height: 55vh;">
+{% extends 'base.html' %} {% block head %}
+
+<style>
+  /* The Modal (background) */
+  .modal,
+  .modal1 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+{% endblock %} {% block content %}
+
+<form
+  action=""
+  method="POST"
+  class="col-lg-4 col-md-4"
+  style="min-height: 55vh;"
+>
   <div class="form-row">
-    <p>  Choose a pet you want assign to a treatment:   </p>
+    <p>Choose a pet you want assign to a treatment:</p>
     <div class="form-group col-lg-12">
-    <select name="petsId" id="petsId" class="form-control">
-      {% for pet in cusromerPets %}
-      <option value="{{ pet._id }}">{{ pet._type }} - {{ pet._name }}</option>
-      {% endfor %}
-    </select>
+      <select name="petsId" id="petsId" class="form-control">
+        {% for pet in cusromerPets %}
+        <option value="{{ pet._id }}">{{ pet._type }} - {{ pet._name }}</option>
+        {% endfor %}
+      </select>
     </div>
     <br />
   </div>
+
   <button type="submit">Send</button>
+  {% if addNewPet %}
+  <br /><br />
+  <button id="btn-add" style="margin-top: 10%;">
+    Add New Pet to customer
+  </button>
+  {% endif %}
 </form>
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <label for="fname">Add New Pet Name:</label>
+    <input type="text" id="petName" name="petName" /><br /><br />
+    <label for="fname">Add New Pet Type:</label>
+    <input type="text" id="petType" name="petType" /><br /><br />
+    <input
+      type="text"
+      id="custMail"
+      name="custMail"
+      value="{{customerMail}}"
+      style="display: none;"
+    /><br /><br />
+    <button onclick="addNewPet(this)">Update</button>
+  </div>
+</div>
+
+{% endblock %} {% block script %}
+<script>
+  document
+    .getElementById("btn-add")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      console.log("click");
+
+      const modal = document.getElementById("myModal");
+
+      //delete the previos documtions
+      document.getElementById("petName").value = "";
+      document.getElementById("petType").value = "";
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      //Adding the id of pet to the form
+
+      // When the user clicks the button, open the modal
+
+      modal.style.display = "block";
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    });
+  function addNewPet(data) {
+    console.log("click in modal");
+    const newType = document.getElementById("petType").value;
+    const newName = document.getElementById("petName").value;
+    const customer = document.getElementById("custMail").value;
+    const modal = document.getElementById("myModal");
+
+    $.ajax({
+      type: "POST",
+      url: "{{url_for('updatePetToCust')}}",
+      contentType: "application/json;charset=UTF-8",
+      data: JSON.stringify({
+        newType: newType,
+        newName: newName,
+        customer: customer,
+      }),
+      success: function (result) {
+        modal.style.display = "none";
+        const res = JSON.parse(result);
+        const select = document.getElementById("petsId");
+        const option = document.createElement("option");
+        option.setAttribute("value", `${res.petId}`);
+        option.text = `${res.newType} - ${res.newName}`;
+        select.add(option);
+        console.log(result);
+      },
+      error: function (data) {
+        console.log(data);
+        alert("something went wrong!");
+      },
+    });
+  }
+</script>
 {% endblock %}
