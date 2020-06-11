@@ -3,14 +3,14 @@
 <style>
   table {
     font-family: arial, sans-serif;
-    border: 1px solid #dddddd;
+   
 
     width: 100%;
   }
 
   td,
   th {
-    border: 1px solid #dddddd;
+    
     text-align: left;
     padding: 8px;
     width: 10%;
@@ -26,7 +26,7 @@
   }
 
   tr:nth-child(even) {
-    background-color: #dddddd;
+    border: 1px solid #888;
   }
 
   .card {
@@ -85,6 +85,7 @@
     text-decoration: none;
     cursor: pointer;
   }
+
   .animastion {
     animation-name: anim;
     animation-duration: 1s;
@@ -102,9 +103,13 @@
       display: none;
     }
   }
+
 </style>
 
+
+
 {% endblock %} {% block content %}
+<p>Drag the pet to the appropriate location, click on it to add a diagnosis.</p>
 <table>
   <!--Waiting room-->
 
@@ -120,16 +125,23 @@
         id="waiting"
         ondrop="drop(event,this)"
         ondragover="allowDrop(event)"
-        style="height: 100%;"
+        style="height: 100% width:50% ; "
+        
       >
         <div draggable="true" ondragstart="drag(event)" id="{{pet.animal._id}}">
           <div
+          class="cardStyle"
             data-toggle="tooltip"
             title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
             style="padding: 2px 0px;"
+            draggable="true"
+            ondragstart="drag(event)"
+            
           >
+
+          
             {% set imgsrc = get_pic(pet.animal._type) %}
             <img
               src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
@@ -137,42 +149,32 @@
               height="40"
               draggable="true"
               ondragstart="drag(event)"
+              id="{{pet.animal._id}}"
+              
+            
               style="
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
               "
-            /><br />
-            <p style="text-align: center;">
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }} )" 
+            />
+            <br />
+            <p style="text-align: center;"
+            draggable="true"
+              ondragstart="drag(event)"
+              id="{{pet.animal._id}}">
               {{pet.animal._name}} the {{pet.animal._type}}
             </p>
-            <br />
-            <button
-              name="{{pet.animal._name}}"
-              onclick="addTretmentLog( {{ pet.animal._id }} )"
-            >
-              Add Treatment Log
-            </button>
+           
+            
           </div>
         </div>
       </div>
     </td>
 
-    {% endfor %} {%for i in range(0, 5)%}
-
-    <td
-      class="item1"
-      ondrop="drop(event)"
-      ondragover="allowDrop(event)"
-      width="100%"
-    >
-      <!-- להגביל למספר חיות בתא-->
-
-      {{i+1}}
-      <!-- להכניס את מספר התא הפנוי-->
-    </td>
-
-    {%endfor%}
+    {% endfor %} 
   </tr>
 
   <!--Cages-->
@@ -197,6 +199,7 @@
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
             style="padding: 2px 0px;"
+            class="cardStyle"
           >
             {% set imgsrc = get_pic(pet.animal._type) %}
             <img
@@ -205,29 +208,32 @@
               height="40"
               draggable="true"
               ondragstart="drag(event)"
+              id="{{pet.animal._id}}"
               style="
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
               "
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
             /><br />
-            <p style="text-align: center;">
+            <p style="text-align: center;"
+            draggable="true"
+              ondragstart="drag(event)"
+              id="{{pet.animal._id}}">
               {{pet.animal._name}} the {{pet.animal._type}}
             </p>
             <br />
-            <button
-              name="{{pet.animal._name}}"
-              onclick="addTretmentLog( {{ pet.animal._id }})"
-            >
-              Add Treatment Log
-            </button>
+            
+             
+         
           </div>
         </div>
       </div>
     </td>
 
-    {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
-    for index in range(session.get("no_cage")) %}
+    {% endfor %} 
+    {%for i in range(0, 8)%}
 
     <td
       class="item1"
@@ -241,7 +247,7 @@
       {% if variable is defined %}
       <!-- להכניס: אם תא עם חיה-->
 
-      {% else %} Empty {% endif %}
+      {% else %}  {% endif %}
     </td>
 
     {% endfor %}
@@ -269,6 +275,7 @@
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
             style="padding: 2px 0px;"
+            class="cardStyle"
           >
             {% set imgsrc = get_pic(pet.animal._type) %}
             <img
@@ -277,29 +284,30 @@
               height="40"
               draggable="true"
               ondragstart="drag(event)"
+              id="{{pet.animal._id}}"
               style="
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
               "
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
             /><br />
-            <p style="text-align: center;">
+            <p style="text-align: center;"
+            draggable="true"
+              ondragstart="drag(event)"
+              id="{{pet.animal._id}}">
               {{pet.animal._name}} the {{pet.animal._type}}
             </p>
             <br />
-            <button
-              name="{{pet.animal._name}}"
-              onclick="addTretmentLog( {{ pet.animal._id }})"
-            >
-              Add Treatment Log
-            </button>
+          
           </div>
         </div>
       </div>
     </td>
 
-    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-    {% for index in range(session.get("no_oper_room")) %}
+    {% endfor %} 
+    {%for i in range(0, 6)%}
 
     <td
       class="item1"
@@ -313,7 +321,7 @@
       {% if variable is defined %}
       <!-- להכניס: אם תא עם חיה-->
 
-      {% else %} Empty {% endif %}
+      {% else %} {% endif %}
     </td>
 
     {% endfor %}
@@ -341,6 +349,7 @@
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
             style="padding: 2px 0px;"
+            class="cardStyle"
           >
             {% set imgsrc = get_pic(pet.animal._type) %}
             <img
@@ -349,29 +358,30 @@
               height="40"
               draggable="true"
               ondragstart="drag(event)"
+              id="{{pet.animal._id}}"
               style="
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
               "
+              name="{{pet.animal._name}}"
+              onclick="addTretmentLog( {{ pet.animal._id }})"
             /><br />
-            <p style="text-align: center;">
+            <p style="text-align: center;"
+            draggable="true"
+              ondragstart="drag(event)"
+              id="{{pet.animal._id}}">
               {{pet.animal._name}} the {{pet.animal._type}}
             </p>
             <br />
-            <button
-              name="{{pet.animal._name}}"
-              onclick="addTretmentLog( {{ pet.animal._id }})"
-            >
-              Add Treatment Log
-            </button>
+         
           </div>
         </div>
       </div>
     </td>
 
-    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-    {% for index in range(session.get("no_oper_room")) %}
+    {% endfor %} 
+    {%for i in range(0, 8)%}
 
     <td
       class="temp"
@@ -385,7 +395,7 @@
       {% if variable is defined %}
       <!-- להכניס: אם תא עם חיה-->
 
-      {% else %} Empty {% endif %}
+      {% else %}{% endif %}
     </td>
 
     {% endfor %}
@@ -407,13 +417,17 @@
     >
       <!-- להגביל למספר חיות בתא-->
 
-      {{i+1}}
+      
       <!-- להכניס את מספר התא הפנוי-->
 
       {%endfor%}
     </td>
   </tr>
 </table>
+
+<button onClick="window.location.href=window.location.href">Save</button>
+
+
 <!-- The Modal -->
 <div id="myModal" class="modal">
   <!-- Modal content -->
