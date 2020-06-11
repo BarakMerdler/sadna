@@ -9,14 +9,18 @@ from pymongo import MongoClient
 from bson import json_util, ObjectId, BSON
 import json
 
+
 app = Flask(__name__)
+
+
+app.jinja_env.filters['zip'] = zip
 
 # !--- For debugging switch to true ---!
 app.debug = True
 
 # for session
 app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
-#toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 
 #! Set the DB connection
 client = MongoClient(
@@ -61,6 +65,10 @@ def updatePetPlace(petId, newPlace):
     result = activePet.update_one(
         {"pet_id": int(petId)}, {"$set": {"place": str(newPlace)}})
     return result.modified_count
+
+
+def getMedicalHistory(petId):
+    return medicalhistory.find({"pet_id": petId})
 
 
 PATH_TO_TEST_IMAGES_DIR = './images'
@@ -179,6 +187,7 @@ def addNewCustomer():
         return redirect(url_for('setNewPetTreatment', email=customerMail))
     return render_template('/setNewPet.html', customerMail=customerMail)
 
+
 # Route to set the pet to treatment
 @app.route('/setNewPetTreatment', methods=['GET', 'POST'])
 def setNewPetTreatment():
@@ -229,27 +238,11 @@ def setNewPetTreatment():
     for pet_id in customer['pet_id']:
         pet = findPet(pet_id)
         cusromerPets.append(animal(pet['_id'], pet['name'], pet['type']))
-    return render_template('/setNewPetTreatment.html', cusromerPets=cusromerPets)
+    return render_template('/setNewPetTreatment.html', cusromerPets=cusromerPets, customerMail=customerMail, addNewPet=1)
 
 # Route to updtae the facilty in the vet
 @app.route('/vetAdmin', methods=['GET', 'POST'])
 def vetAdmin():
-    if request.method == 'POST':
-        vetsDetails = request.form
-        no_oper_room = int(vetsDetails['no_oper_room'])
-        vetsCage = int(vetsDetails['no_cage'])
-        vetId = int(session['vetId'])
-        try:
-            vet.update_one({"_id": vetId}, {
-                "$set": {
-                    "no_oper_room": no_oper_room,
-                    "no_cage": vetsCage
-                }})
-            session["no_oper_room"] = no_oper_room
-            session["no_cage"] = vetsCage
-            return render_template('/home.html')
-        except Exception as e:
-            print(e)
     return render_template('/editingRooms.html')
 
 # Route to set new user in a new vent
@@ -275,6 +268,33 @@ def admin():
         except Exception as e:
             print(e)
     return render_template('/adminLogIn.html')
+
+# Route to add another user for vet
+@app.route('/AdminAddUser', methods=['GET', 'POST'])
+def AdminAddUser():
+    if request.method == 'POST':
+        data = request.get_json()
+        userName = data['name']
+        userMail = data['email']
+        admin = bool(data['admin'])
+        userPassword = sha256_crypt.encrypt(data['password'])
+        if findUser(userMail):
+            return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
+        newUser = {
+            "email": userMail,
+            "name": userName,
+            "password": userPassword,
+            "admin": admin,
+            "date_created": datetime.utcnow(),
+            "veterinary_id": session['vetId']
+        }
+        try:
+            users.insert_one(newUser)
+            return redirect(url_for('home'))
+        except Exception as e:
+            print(e)
+            return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
+    return render_template('/adminLogIn.html', oldUser=1)
 
 # Route to set new vent
 @app.route('/admin/vet', methods=['GET', 'POST'])
@@ -335,13 +355,71 @@ def removePetFromClink():
 
 @app.route('/deleteFromActive', methods=['POST'])
 def deleteFromActive():
-    petId = request.get_json()
+    data = request.get_json()
+    petId = int(data['id'])
+    discharge_note = data['dischargeNote']
+    print(discharge_note)
+    print(petId)
     try:
+        petMedicalId = activePet.find_one({"pet_id": petId})
+        medicalId = int(petMedicalId['currentMedicalId'])
+        medicalhistory.update_one({"_id": medicalId}, {
+            '$set': {
+                "endDate": datetime.utcnow(),
+                'discharge_note': discharge_note
+            }
+        })
         removeFromActive(petId)
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     except Exception as e:
         print(e)
-        return redirect(url_for('removePetFromClink'))
-    return redirect(url_for('home'))
+        return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
+
+# Set new pet to customer exsits
+@app.route('/updatePetToCust', methods=['POST'])
+def updatePetToCust():
+    data = request.get_json()
+    newName = data['newName']
+    newType = data['newType']
+    customer = data['customer']
+    petid = pets.count_documents({}) + 1
+    newPet = {
+        "_id": petid,
+        "name": newName,
+        "type": newType,
+        "active": False,
+        "medicalHistoryId": [],
+        "date_created": datetime.utcnow()
+    }
+    try:
+        pets.insert_one(newPet)
+    except Exception as e:
+        print(e)
+        return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
+    try:
+        customers.update_one({"email": customer}, {
+            "$push": {"pet_id": petid}
+        })
+    except Exception as e:
+        print(e)
+        return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
+    return json.dumps({'success': True, 'newName': newName, 'newType': newType, 'customer': customer, 'petId': petid}), 200, {'ContentType': 'application/json'}
+
+# API to update facilty
+@app.route('/updateFacilty', methods=['POST'])
+def updateFacilty():
+    data = request.get_json()
+    by = int(data['by'])
+    place = data['place']
+    vetId = session['vetId']
+    try:
+        vet.update_one({"_id": vetId}, {
+            "$inc": {place: by}
+        })
+        session[place] += by
+    except Exception as e:
+        return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
+    return json.dumps({'success': True, 'place': place, 'by': by}), 200, {'ContentType': 'application/json'}
 
 # API to update place for pet at the vet
 @app.route('/update')
@@ -367,9 +445,10 @@ def updateActivePetPlace():
         return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
     return 'success'
 
+
 @app.route('/api', methods=['GET', 'POST'])
 def api():
-     return render_template('/api.html')
+    return render_template('/api.html')
 
 
 @app.route('/addTreatmentToPet', methods=['POST'])
@@ -392,6 +471,52 @@ def addTreatmentToPet():
         print(e)
         return Response("{'error':'%s'}" % (e), status=404, mimetype='application/json')
     return 'success'
+
+
+@app.route('/treatmentLog', methods=['POST', 'GET'])
+def treatmentLog():
+    med = []
+    PeitId = request.args.get('id')
+    med_history = getMedicalHistory(int(PeitId))
+    for medical in med_history:
+        med.append(medical)
+    return render_template('/treatmentLog.html', med=med)
+
+
+@app.route('/searchpettotreatment', methods=['GET', 'POST'])
+def searchpettotreatment():
+    if request.method == 'POST':
+        userDetails = request.form
+        email = userDetails['email']
+        if (findCustomer(email)):
+            return redirect(url_for('searcsetNewPetTreatment', email=email))
+        return render_template('/customers.html', error=1)
+    return render_template('/customers.html')
+
+
+@app.route('/searcsetNewPetTreatment', methods=['GET', 'POST'])
+def searcsetNewPetTreatment():
+    if request.method == 'POST':
+        petId = int(request.form['petsId'])
+        return redirect(url_for('treatmentLog', id=petId))
+    customerMail = request.args['email']
+    customer = findCustomer(customerMail)
+    cusromerPets = []
+    for pet_id in customer['pet_id']:
+        pet = findPet(pet_id)
+        cusromerPets.append(animal(pet['_id'], pet['name'], pet['type']))
+    return render_template('/setNewPetTreatment.html', cusromerPets=cusromerPets)
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.pop("name", None)
+    session.pop("admin", None)
+    session.pop("vetId", None)
+    session.pop("vet_name", None)
+    session.pop("no_oper_room", None)
+    session.pop("no_cage", None)
+    return redirect(url_for('index'))
 
 
 @app.context_processor

@@ -62,4 +62,5 @@ class pets:
 
     
 
-    
+    newmail@mail.com
+    123
