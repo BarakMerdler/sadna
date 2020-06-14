@@ -421,6 +421,16 @@ def updateFacilty():
         return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
     return json.dumps({'success': True, 'place': place, 'by': by}), 200, {'ContentType': 'application/json'}
 
+# API to get pet current place
+@app.route('/getPetPlace', methods=['POST'])
+def getPetPlace():
+    data = request.get_json()
+    petId = int(data['petId'])
+    pet = activePet.find_one({"pet_id": petId})
+    place = pet['place']
+    print(place)
+    return json.dumps({'success': True, 'place': place}), 200, {'ContentType': 'application/json'}
+
 # API to update place for pet at the vet
 @app.route('/update')
 def update():
@@ -527,7 +537,9 @@ def utility_processor():
             'giraffe': "giraffe.png",
             'lion': "lion.jpg",
             'pinguin': "pinguin.jpg",
-            'tiger': "tiger.png"
+            'tiger': "tiger.png",
+            'dog': "dog.png",
+            'cat': "cat.png"
         }.get(animal, 'tiger.png')
     return dict(get_pic=get_pic)
 
