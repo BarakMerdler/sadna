@@ -139,17 +139,14 @@ function drag(ev) {
   ev.dataTransfer.setData("id", ev.target.id);
 }
 
-function drop(ev, target) {
+async function drop(ev, target) {
   ev.preventDefault();
+  // data is pet id
   var data = ev.dataTransfer.getData("id");
+
+  await updateTreatment(parseInt(data), target.id, ev.target);
+
   ev.target.appendChild(document.getElementById(data));
-  console.log(target);
-  console.log(target.id);
-  if (data === "kill") {
-    removeFromClink(parseInt(data));
-  } else {
-    updateTreatment(parseInt(data), target.id);
-  }
 }
 
 function viewTreatment() {
