@@ -3,14 +3,14 @@
 <style>
   table {
     font-family: arial, sans-serif;
-    border: 1px solid #dddddd;
+   
 
     width: 100%;
   }
 
   td,
   th {
-    border: 1px solid #dddddd;
+    
     text-align: left;
     padding: 8px;
     width: 10%;
@@ -26,7 +26,7 @@
   }
 
   tr:nth-child(even) {
-    background-color: #dddddd;
+    border: 1px solid #888;
   }
 
   .card {
@@ -91,6 +91,7 @@
     text-decoration: none;
     cursor: pointer;
   }
+
   .animastion {
     animation-name: anim;
     animation-duration: 1s;
@@ -127,9 +128,13 @@
       display: none;
     }
   }
+
 </style>
 
+
+
 {% endblock %} {% block content %}
+<p>Drag the pet to the appropriate location, click on it to add a diagnosis.</p>
 <table>
   <!--Waiting room-->
 
@@ -151,7 +156,9 @@
         id="waiting"
         ondrop="drop(event,this)"
         ondragover="allowDrop(event)"
+
         style="height: 100%; display: flex;"
+
       >
         <div
           draggable="true"
@@ -160,12 +167,18 @@
           style="height: 100%; display: flex;"
         >
           <div
+          class="cardStyle"
             data-toggle="tooltip"
             title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
             style="padding: 2px 0px;"
+            draggable="true"
+            ondragstart="drag(event)"
+            
           >
+
+          
             {% set imgsrc = get_pic(pet.animal._type) %}
             <img
               src="{{ url_for('static',filename='img/animals/' + imgsrc) }}"
@@ -173,11 +186,15 @@
               height="40"
               draggable="true"
               ondragstart="drag(event)"
+              id="{{pet.animal._id}}"
+              
+            
               style="
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
               "
+
             />
             <p style="text-align: center;">
               {{pet.animal._name}} the {{pet.animal._type}}
@@ -190,12 +207,15 @@
             >
               Add Treatment Log
             </button>
+
           </div>
         </div>
       </div>
     </td>
 
+
     {% endfor %}
+
   </tr>
 
   <!--Cages-->
@@ -226,6 +246,7 @@
           title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
+
           style="padding: 2px 0px;"
         >
           {% set imgsrc = get_pic(pet.animal._type) %}
@@ -248,12 +269,13 @@
           >
             Add Treatment Log
           </button>
+
         </div>
       </div>
     </td>
 
-    {% endfor %} {% set index = session.get("no_cage") - petCage|length %} {%
-    for index in range(session.get("no_cage")) %}
+    {% endfor %} 
+    {%for i in range(0, 8)%}
 
     <td
       class="item1"
@@ -267,6 +289,7 @@
       <!-- להגביל למספר חיות בתא-->
 
       <!-- להכניס: אם תא עם חיה-->
+
     </td>
 
     {% endfor %}
@@ -299,6 +322,7 @@
           title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
+
           style="padding: 2px 0px;"
         >
           {% set imgsrc = get_pic(pet.animal._type) %}
@@ -321,12 +345,13 @@
           >
             Add Treatment Log
           </button>
+
         </div>
       </div>
     </td>
 
-    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-    {% for index in range(session.get("no_oper_room")) %}
+    {% endfor %} 
+    {%for i in range(0, 6)%}
 
     <td
       class="item1"
@@ -337,6 +362,9 @@
       class="myTd"
     >
       <!-- להגביל למספר חיות בתא-->
+
+
+
     </td>
 
     {% endfor %}
@@ -371,6 +399,7 @@
           title="name: {{pet.animal._name}}
                 type: {{pet.animal._type}}
                 place: {{pet.place}}"
+
           style="padding: 2px 0px;"
         >
           {% set imgsrc = get_pic(pet.animal._type) %}
@@ -393,12 +422,13 @@
           >
             Add Treatment Log
           </button>
+
         </div>
       </div>
     </td>
 
-    {% endfor %} {% set index = session.get("no_oper_room") - petOper|length %}
-    {% for index in range(session.get("no_oper_room")) %}
+    {% endfor %} 
+    {%for i in range(0, 8)%}
 
     <td
       class="temp"
@@ -410,6 +440,7 @@
       style="border: 1.4px solid #eff5f5;"
     >
       <!-- להגביל למספר חיות בתא-->
+
     </td>
 
     {% endfor %}
@@ -435,6 +466,10 @@
     </td>
   </tr>
 </table>
+
+<button onClick="window.location.href=window.location.href">Save</button>
+
+
 <!-- The Modal -->
 <div id="myModal" class="modal">
   <!-- Modal content -->
