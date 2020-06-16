@@ -30,6 +30,21 @@
     </div>
   </div>
   <div class="text-center col-lg-6"><button type="submit">Submit</button></div>
+  {% if route %}
+  <div class="text-center col-lg-6" style="margin-top: 10%;">
+    <button id="RFID">RFID code</button>
+  </div>
+  {% endif %}
 </form>
 
+<input id="myRoute" style="display: none;" type="text" value="{{route}}" />
+{% endblock %} {% block script %}
+<script>
+  document.getElementById("RFID").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    console.log("click");
+    window.location.href = "{{url_for('video', route='addToClinck')}}";
+  });
+</script>
 {% endblock %}

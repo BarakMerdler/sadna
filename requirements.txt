@@ -5,3 +5,6 @@ flask-debugtoolbar
 mongoengine
 dnspython
 numpy
+python-decouple
+Pillow
+pytesseract

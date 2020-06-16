@@ -8,12 +8,12 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson import json_util, ObjectId, BSON
 import json
+from decouple import config
+from markupsafe import escape
 
 
 app = Flask(__name__)
 
-
-app.jinja_env.filters['zip'] = zip
 
 # !--- For debugging switch to true ---!
 app.debug = True
@@ -23,8 +23,8 @@ app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
 # toolbar = DebugToolbarExtension(app)
 
 #! Set the DB connection
-client = MongoClient(
-    'mongodb+srv://sadna:sadna1234@cluster0-duigw.mongodb.net/test?retryWrites=true&w=majority')
+API_DB_KEY = config('DB_URL')
+client = MongoClient(API_DB_KEY)
 db = client['petcare']
 #! Set the tables
 users = db['users']
@@ -144,7 +144,7 @@ def addpet():
         if (findCustomer(email)):
             return redirect(url_for('setNewPetTreatment', email=email))
         return redirect(url_for('addNewCustomer', email=email))
-    return render_template('/customers.html')
+    return render_template('/customers.html', route='addpet')
 
 # Route to set new customer and his pets
 @app.route('/addNewCustomer', methods=['GET', 'POST'])
@@ -327,9 +327,11 @@ def vetInit():
     return render_template('/vetInit.html')
 
 
-@app.route('/video')
-def video():
-    return render_template('/video.html')
+@app.route('/video/<route>')
+def video(route):
+    AddPetOrTreat = escape(route)
+    print(AddPetOrTreat)
+    return render_template('/video.html', route=AddPetOrTreat)
 
 # save the image as a picture
 @app.route('/image', methods=['POST'])
@@ -337,9 +339,14 @@ def image():
     i = request.files['image']  # get the image
     f = ('%s.jpeg' % time.strftime("%Y%m%d-%H%M%S"))
     i.save('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
-    data = decode('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
+    try:
+        data = decode('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
+    except Exception as e:
+        print(e)
+        os.remove('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
+        return Response("%s didn't get the data" % (f))
     os.remove('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))
-    return Response("%s saved./n data: %s " % (f, data))
+    return Response("%s" % (data))
 
 # API to remove pet from active care
 @app.route('/removePetFromClink')
@@ -404,6 +411,62 @@ def updatePetToCust():
         print(e)
         return json.dumps({'success': False, 'error': e}), 500, {'ContentType': 'application/json'}
     return json.dumps({'success': True, 'newName': newName, 'newType': newType, 'customer': customer, 'petId': petid}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/handlerfid', methods=['POST'])
+def handlerfid():
+    data = request.get_json()
+    route = data['route']
+    petId = int(data['id'])
+    print(petId)
+    pet = pets.find_one({"rfid": petId})
+    print(pet)
+    if pet is None:
+        return redirect(url_for("video", route=route))
+    if route == 'addToClinck':
+        medicalId = medicalhistory.count_documents({}) + 1
+        try:
+            pets.update_one({"_id": pet['_id']}, {
+                "$set": {
+                    "active": True
+                }
+            })
+        except Exception as e:
+            print(e)
+        try:
+            newActivePet = {
+                "pet_id": pet['_id'],
+                "vet_id": session['vetId'],
+                "place": "waiting",
+                "currentMedicalId": medicalId,
+                "startDate": datetime.utcnow()
+            }
+            activePet.insert_one(newActivePet)
+        except Exception as e:
+            print(e)
+        try:
+            newMedical = {
+                "_id": medicalId,
+                "vet_id": session['vetId'],
+                "pet_id": pet['_id'],
+                "startDate": datetime.utcnow()
+            }
+            medicalhistory.insert_one(newMedical)
+        except Exception as e:
+            print(e)
+        try:
+            pets.update_one({"_id": pet['_id']}, {
+                "$push": {
+                    "medicalHistoryId": medicalId
+                }
+            })
+        except Exception as e:
+            print(e)
+        return json.dumps({'success': True, 'route': route, 'petId': petId}), 200, {'ContentType': 'application/json'}
+        # return json.dumps({'success': True, 'route': route, 'petId': petId}), 200, {'ContentType': 'application/json'}
+    return redirect(url_for('treatmentLog', id=pet['_id']))
+    # return json.dumps({'success': True, 'route': route, 'petId': petId}), 200, {'ContentType': 'application/json'}
+
 
 # API to update facilty
 @app.route('/updateFacilty', methods=['POST'])
@@ -545,4 +608,4 @@ def utility_processor():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=80)
+    app.run(host='0.0.0.0', port=80)
