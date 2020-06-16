@@ -2,6 +2,8 @@ import cv2
 import pyzbar.pyzbar as pyzbar
 import numpy as np
 import pytesseract
+from twilio.rest import Client
+from decouple import config
 
 
 def decode(img):
@@ -21,3 +23,19 @@ def decode(img):
     # except Exception as e:
     #    print(e)
     #    return None
+
+
+def twilioHandle(phone):
+    # Your Account SID from twilio.com/console
+    account_sid = config('ACCOUNT_SID')
+    # Your Auth Token from twilio.com/console
+    auth_token = config('AUTH_TOKEN')
+
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        to=config(phone),
+        from_=config('FROM_NUM'),
+        body="Your pet is ready to come back home :)")
+
+    return(message.sid)

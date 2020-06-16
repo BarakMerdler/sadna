@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, Response, redirect, url_for, session
 import time
-from helpers import decode
+from helpers import decode, twilioHandle
 from flask_debugtoolbar import DebugToolbarExtension
 import os
 from passlib.hash import sha256_crypt
@@ -590,6 +590,17 @@ def logout():
     session.pop("no_oper_room", None)
     session.pop("no_cage", None)
     return redirect(url_for('index'))
+
+# send sms
+@app.route('/sendsms', methods=['POST'])
+def sendsms():
+    data = request.get_json()
+    try:
+        api_res = twilioHandle(data['phone'])
+    except Exception as e:
+        print(e)
+        return json.dumps({'success': False, 'data': e}), 500, {'ContentType': 'application/json'}
+    return json.dumps({'success': True, 'data': api_res}), 200, {'ContentType': 'application/json'}
 
 
 @app.context_processor

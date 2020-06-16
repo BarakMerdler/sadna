@@ -8,3 +8,4 @@ numpy
 python-decouple
 Pillow
 pytesseract
+twilio
