@@ -134,7 +134,24 @@
 
 
 {% endblock %} {% block content %}
-<p>Drag the pet to the appropriate location, click on it to add a diagnosis.</p>
+
+<div style="width: 100%; margin: auto;">
+  <label for="phone" style="padding: 10px;"
+    >Select person to send SMS when relase animal (API free trial)</label
+  >
+  <select name="phone" id="phoneList">
+    <option value="BARAK_NUM" selected="selected">Barak</option>
+    <option value="EINAR_NUM">Einar</option>
+    <option value="EMNUAL_NUM">Emnual</option>
+    <option value="RONI_NUM">Roni</option>
+    <option value="RON_NUM">Ron</option>
+  </select>
+</div>
+<div style="width: 100%; margin: auto;">
+  <p>Drag the pet to the appropriate location</p>
+</div>
+
+
 <table>
   <!--Waiting room-->
 
@@ -504,6 +521,30 @@
 </div>
 {%endblock%} {% block script %}
 <script>
+  function sendsms() {
+    const phone = document.getElementById("phoneList").value;
+    console.log(phone);
+
+    const entry = {
+      phone: phone,
+    };
+    fetch("{{url_for('sendsms')}}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entry),
+    })
+      .then((res) => {
+        console.log("success sendsms");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("failed sendsms");
+        console.log(err);
+      });
+  }
+
   async function updateTreatment(id, newPlace, newPlaceElemnt) {
     const val = newPlace;
 
@@ -582,6 +623,7 @@
           const element = document.getElementById(`${id}`);
           element.classList.add("animastion");
           setTimeout(removeElemnt, 1000, element);
+          sendsms();
         },
         error: function (data) {
           alert("Somthing went wrong please contact us");

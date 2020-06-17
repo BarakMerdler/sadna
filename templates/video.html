@@ -1,8 +1,45 @@
-{% extends "layout.html" %} {% block title %} homePage {% endblock %} {% block
+{% extends "base.html" %} {% block title %} homePage {% endblock %} {% block
 content %}
-
-<video id="myVideo" autoplay style="height: 50vh;margin: auto;"></video>
-
+<h1 style="margin: auto;">
+  Hold the Code and click on the stream!
+</h1>
+<div
+  style="
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    padding: 5px;
+  "
+>
+  <div style="margin: auto; padding: 5px;">
+    <p style="width: 50%; margin: auto;">
+      Due to a hardware issue, we implement this feature with a QR code
+      reader.<br />
+      The library we are using got an RFID decored, so we can implement the RFID
+      quickly.<br />
+      Because we know that you don't have QR code in hand, we are sending a hard
+      copy of an image located at ./images of QR contain data '1234567890'.<br />
+      In case you want to check with your image, please contact us, and we will
+      change it (it implement already)
+    </p>
+  </div>
+  <div style="width: 100%;">
+    <video
+      id="myVideo"
+      autoplay
+      style="
+        height: 50vh;
+        margin: auto;
+        position: relative;
+        transform: translateX(-50%);
+        left: 50%;
+      "
+    ></video>
+  </div>
+</div>
+<input id="myRoute" style="display: none;" type="text" value="{{route}}" />
 <script>
   let v = document.getElementById("myVideo");
 
@@ -15,41 +52,69 @@ content %}
     let formdata = new FormData();
     formdata.append("image", file);
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:5000/image", true);
-    xhr.onload = function() {
-      if (this.status === 200) console.log(this.response);
-      else console.error(xhr);
+    xhr.open("POST", "{{url_for('image')}}", true);
+    xhr.onload = function () {
+      if (this.status === 200) {
+        const route = document.getElementById("myRoute").value;
+        console.log(route);
+        console.log(this.response);
+        res = this.response;
+
+        const entry = {
+          route: route,
+          id: res,
+        };
+
+        fetch("{{url_for('handlerfid')}}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(entry),
+        })
+          .then((res) => {
+            if (route == "addToClinck") {
+              window.location.href = "{{url_for('home')}}";
+            } else {
+              window.location.href = "{{url_for('home')}}";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        console.error(xhr);
+      }
     };
     xhr.send(formdata);
   }
-  +(
-    //Get the image from the canvas
-    function sendImagefromCanvas() {
-      //Make sure the canvas is set to the current video size
-      imageCanvas.width = v.videoWidth;
-      imageCanvas.height = v.videoHeight;
 
-      imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
+  //Get the image from the canvas
+  function sendImagefromCanvas() {
+    //Make sure the canvas is set to the current video size
+    imageCanvas.width = v.videoWidth;
+    imageCanvas.height = v.videoHeight;
 
-      //Convert the canvas to blob and post the file
-      imageCanvas.toBlob(postFile, "image/jpeg");
-    }
-  );
+    imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
+
+    //Convert the canvas to blob and post the file
+    imageCanvas.toBlob(postFile, "image/jpeg");
+  }
 
   //Take a picture on click
-  v.onclick = function() {
+  v.onclick = function () {
     console.log("click");
     sendImagefromCanvas();
   };
 
-  window.onload = function() {
+  window.onload = function () {
     //Get camera video
     navigator.mediaDevices
       .getUserMedia({ video: { width: 1280, height: 720 }, audio: false })
-      .then(stream => {
+      .then((stream) => {
         v.srcObject = stream;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("navigator.getUserMedia error: ", err);
       });
   };

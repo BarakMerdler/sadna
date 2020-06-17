@@ -58,9 +58,3 @@ class pets:
     rfid: int
     active: bool
 
-
-
-    
-
-    newmail@mail.com
-    123
